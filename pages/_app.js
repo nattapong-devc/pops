@@ -7,7 +7,10 @@ export default function App({ Component, pageProps }) {
     <title>POPS</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     {/* tiktok verification */}
-    <meta name="tiktok-verification" content="2hpLNIo6gUwD61ECqfHNJrRLOvHUyl9M" />
+    <meta name="tiktok-verification" content="9vy1HlLfCgn4tmBu7nZqB58YXqlNC03n" />
+
+    {/* Icon */}
+    <link rel="icon" href="/favicon.ico" />
   </Head>
   
   <Component {...pageProps} /></>;
