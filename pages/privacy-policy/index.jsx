@@ -4,6 +4,7 @@ import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import styled from "@emotion/styled";
+
 export default function PrivacyPolicy() {
   const PrivacyText = styled.ol`
     list-style-type: none;
@@ -37,18 +38,19 @@ export default function PrivacyPolicy() {
   `;
 
   const BulletParagraph = styled.p`
-  position: relative;
-  padding-left: 1.5em;
-  margin: 0;
-   margin-bottom: 0.3em;
+    position: relative;
+    padding-left: 1.5em;
+    margin: 0;
+    margin-bottom: 0.3em;
 
-  &::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: black;]
-  }
-`;
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: black;
+    }
+  `;
+
   return (
     <AppWrapper>
       <Box
@@ -78,81 +80,82 @@ export default function PrivacyPolicy() {
         <Box>
           <PrivacyText>
             <li>
-              บทนำ
+              Introduction
               <PrivacyText>
                 <div>
-                  ระบบแหล่งรวมงานสำหรับ Influencer
-                  มีจุดประสงค์ในการบันทึกและจัดเก็บข้อมูลผู้ป่วยที่เข้ารับการบำบัดและฟื้นฟูผู้ติดยาเสพติด
-                  การใช้งานระบบนี้ต้องปฏิบัติตามข้อกำหนดและเงื่อนไขที่กำหนดไว้ในนโยบายนี้
-                  เพื่อปกป้องความเป็นส่วนตัวและความปลอดภัยของข้อมูลผู้ป่วย
+                  POPS is a platform for influencers to connect with clients for
+                  campaigns and opportunities. By using this platform, you agree
+                  to the terms outlined in this Privacy Policy to protect your
+                  personal information.
                 </div>
               </PrivacyText>
             </li>
 
             <li>
-              นโยบายความเป็นส่วนตัว
+              Privacy Policy
               <PrivacyText>
-                <li>การเก็บรวบรวมข้อมูล</li>
+                <li>Information Collection</li>
                 <BulletParagraph>
-                  ระบบจะเก็บรวบรวมข้อมูลส่วนบุคคลของผู้ป่วย เช่น ชื่อ นามสกุล
-                  อายุ ที่อยู่ หมายเลขบัตรประชาชน ประวัติการรักษา
-                  ยาและปริมาณที่ใช้ การตอบสนองต่อการรักษา และข้อมูลอื่น ๆ
-                  ที่เกี่ยวข้องกับการบำบัดรักษา
+                  We collect personal information such as your name, email
+                  address, social media profiles, and other details you provide
+                  when creating an account.
                 </BulletParagraph>
                 <BulletParagraph>
-                  ข้อมูลการเข้าใช้งานของผู้ใช้ เช่น IP Address,
-                  ประเภทของเบราว์เซอร์, เวลาที่เข้าใช้งาน,
-                  และข้อมูลการเข้าชมหน้าเว็บไซต์
+                  We also collect usage data, such as IP addresses, browser
+                  types, access times, and pages visited on the platform.
                 </BulletParagraph>
-                <li>การใช้ข้อมูล</li>
+                <li>How We Use Your Information</li>
                 <BulletParagraph>
-                  ข้อมูลที่เก็บรวบรวมจะถูกใช้เพื่อวัตถุประสงค์ในการบำบัดและฟื้นฟูผู้ติดยาเสพติด
-                  การวิเคราะห์เพื่อปรับปรุงการรักษา
-                  การทำวิจัยเพื่อพัฒนาวิธีการบำบัดรักษา และ
-                  การติดตามผลการบำบัดรักษาตามนโยบายของรัฐบาล
+                  The information we collect is used to enhance the user
+                  experience, facilitate campaign participation, and improve our
+                  services.
                 </BulletParagraph>
                 <BulletParagraph>
-                  ข้อมูลการเข้าใช้งานจะถูกใช้เพื่อวัตถุประสงค์ในการปรับปรุงการให้บริการและความปลอดภัยของระบบ
+                  We may use your data for analytics and to improve the
+                  platform's security.
                 </BulletParagraph>
-                <li>การคุ้มครองข้อมูล</li>
+                <li>Data Protection</li>
                 <BulletParagraph>
-                  ระบบมีมาตรการป้องกันการเข้าถึงข้อมูลโดยไม่ได้รับอนุญาต เช่น
-                  การใช้เทคโนโลยีการเข้ารหัสข้อมูล การใช้ระบบตรวจสอบการเข้าถึง
-                  และการรักษาความปลอดภัยทางกายภาพ
+                  We take reasonable measures to protect your data, including
+                  encryption, access control systems, and physical security
+                  safeguards.
                 </BulletParagraph>
                 <BulletParagraph>
-                  การเข้าถึงข้อมูลจะจำกัดเฉพาะเจ้าหน้าที่และบุคลากรที่ได้รับอนุญาตและมีความจำเป็นในการใช้งานเท่านั้น
+                  Access to your data is limited to authorized personnel only.
                 </BulletParagraph>
               </PrivacyText>
             </li>
 
             <li>
-              เงื่อนไขการใช้บริการ
+              Terms of Service
               <PrivacyText>
-                <li>การลงทะเบียน</li>
+                <li>Registration</li>
                 <BulletParagraph>
-                  ผู้ใช้งานต้องลงทะเบียนและได้รับอนุญาตจากผู้ดูแลระบบก่อนที่จะสามารถเข้าถึงระบบได้
+                  Users must register and be authorized by the platform
+                  administrator to access the platform.
                 </BulletParagraph>
                 <BulletParagraph>
-                  การลงทะเบียนต้องให้ข้อมูลที่ถูกต้องและครบถ้วนตามที่ระบบกำหนด
+                  Registration requires providing accurate and complete
+                  information.
                 </BulletParagraph>
-                <li>ความรับผิดชอบของผู้ใช้งาน</li>
+                <li>User Responsibilities</li>
                 <BulletParagraph>
-                  ผู้ใช้งานต้องรักษาความลับของข้อมูลการเข้าสู่ระบบ เช่น
-                  ชื่อผู้ใช้และรหัสผ่าน
-                  และไม่เผยแพร่ข้อมูลดังกล่าวให้กับบุคคลที่ไม่ได้รับอนุญาต
-                </BulletParagraph>
-                <BulletParagraph>
-                  ผู้ใช้งานต้องไม่กระทำการใด ๆ
-                  ที่อาจก่อให้เกิดความเสียหายต่อระบบ เช่น การพยายามเจาะระบบ
-                  การเผยแพร่ไวรัส หรือการกระทำอื่น ๆ ที่เป็นอันตราย
-                </BulletParagraph>
-                <li>การจัดการข้อมูล</li>
-                <BulletParagraph>
-                  ผู้ใช้งานต้องปฏิบัติตามนโยบายนี้และข้อกำหนดทางกฎหมายที่เกี่ยวข้องในการจัดการข้อมูลผู้ป่วย
+                  Users must maintain the confidentiality of their login
+                  details, such as usernames and passwords, and refrain from
+                  sharing them with unauthorized individuals.
                 </BulletParagraph>
                 <BulletParagraph>
-                  การแก้ไขหรือปรับปรุงข้อมูลต้องดำเนินการโดยเจ้าหน้าที่ที่ได้รับอนุญาตเท่านั้น
+                  Users must not engage in actions that may harm the platform,
+                  such as attempting to breach the system or spreading viruses.
+                </BulletParagraph>
+                <li>Data Management</li>
+                <BulletParagraph>
+                  Users must comply with this Privacy Policy and any relevant
+                  legal regulations when handling personal data.
+                </BulletParagraph>
+                <BulletParagraph>
+                  Only authorized personnel are allowed to edit or update the
+                  data.
                 </BulletParagraph>
               </PrivacyText>
             </li>

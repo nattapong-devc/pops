@@ -1,55 +1,54 @@
-import { BANNER } from "@/assets";
-import AppWrapper from "@/components/hoc/AppWrapper";
 import { Box, Container, Typography } from "@mui/material";
-import Image from "next/image";
 import React from "react";
+import AppWrapper from "@/components/hoc/AppWrapper";
 import styled from "@emotion/styled";
 
 export default function TermsAndConditions() {
-  const PrivacyText = styled.ol`
-  list-style-type: none;
-  counter-reset: item;
-  margin: 0;
-  padding: 0;
-
-  li {
-    display: table;
-    counter-increment: item;
-    margin-bottom: 0.6em;
-
-    & > ol > li {
-      margin-bottom: 0.3em;
-    }
-  }
-
-  li:before {
-    content: counters(item, ".") ". ";
-    display: table-cell;
-    padding-right: 0.6em;
-  }
-
-  li li {
+  const TermsText = styled.ol`
+    list-style-type: none;
+    counter-reset: item;
     margin: 0;
-  }
+    padding: 0;
 
-  li li:before {
-    content: counters(item, ".") " ";
-  }
-`;
+    li {
+      display: table;
+      counter-increment: item;
+      margin-bottom: 0.6em;
 
-const BulletParagraph = styled.p`
-position: relative;
-padding-left: 1.5em;
-margin: 0;
- margin-bottom: 0.3em;
+      & > ol > li {
+        margin-bottom: 0.3em;
+      }
+    }
 
-&::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: black;]
-}
-`;
+    li:before {
+      content: counters(item, ".") ". ";
+      display: table-cell;
+      padding-right: 0.6em;
+    }
+
+    li li {
+      margin: 0;
+    }
+
+    li li:before {
+      content: counters(item, ".") " ";
+    }
+  `;
+
+  const BulletParagraph = styled.p`
+    position: relative;
+    padding-left: 1.5em;
+    margin: 0;
+    margin-bottom: 0.3em;
+
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: black;
+    }
+  `;
+
   return (
     <AppWrapper>
       <Box
@@ -72,124 +71,108 @@ margin: 0;
       </Box>
 
       <Container
-      sx={{
-        py: 5,
-      }}
+        sx={{
+          py: 5,
+        }}
       >
-      
         <Box>
-          <PrivacyText>
+          <TermsText>
             <li>
-              การยอมรับข้อกำหนด
-              <PrivacyText>
-                <li>
-                  การเข้าถึงและใช้งานระบบแหล่งรวมงานสำหรับ Influencerของประเทศ (บสต.) (“ระบบ”) ถือว่าผู้ใช้งาน (“ผู้ใช้งาน” หรือ “คุณ”)
-                  ได้ยอมรับและตกลงที่จะปฏิบัติตามข้อกำหนดและเงื่อนไขการใช้งานนี้ทั้งหมด
-                </li>
-                <li>ข้อมูลที่ผู้ใช้งานให้มาจะต้องเป็นความจริงและถูกต้องทุกประการ</li>
-                <li>การเข้าถึงข้อมูลจะจำกัดเฉพาะบุคคลที่มีสิทธิ์และเป็นไปตามกฎหมาย</li>
-              </PrivacyText>
-            </li>
-            <li>
-              การเก็บรวบรวมและการใช้ข้อมูล
-              <PrivacyText>
-                <li>ระบบจะเก็บรวบรวมข้อมูลส่วนบุคคลของผู้บำบัดเพื่อวัตถุประสงค์ทางการแพทย์เท่านั้น</li>
-                <li>
-                  ข้อมูลที่เก็บรวบรวม ทั้งกับ ผู้ใช้งาน ผู้ป่วย ได้แก่ ชื่อ-นามสกุล เลขบัตรประชาชน ที่อยู่ ข้อมูลการติดต่อ ประวัติการบำบัดรักษา
-                  และข้อมูลอื่น ๆ ที่เกี่ยวข้องกับการบำบัดรักษา{" "}
-                </li>
-                <li>
-                  ข้อมูลที่เก็บรวบรวมจะถูกใช้เฉพาะเพื่อวัตถุประสงค์ในการบำบัดรักษาและฟื้นฟูผู้ติดยาเสพติด
-                  และจะไม่ถูกเปิดเผยต่อบุคคลที่สามโดยไม่ได้รับความยินยอมจากผู้ใช้งาน ยกเว้นตามที่กฎหมายกำหนด
-                </li>
-                <li>ระบบอาจใช้ข้อมูลสถิติที่ไม่สามารถระบุตัวตนผู้ใช้งานเพื่อการวิเคราะห์การบำบัดรักษา</li>
-              </PrivacyText>
+              Acceptance of Terms
+              <TermsText>
+                <div>
+                  By accessing or using the POPS platform ("the Platform"), you agree to comply with and be bound by the following terms and conditions ("Terms"). If you do not agree to these Terms, do not use the Platform.
+                </div>
+              </TermsText>
             </li>
 
             <li>
-              ความปลอดภัยของข้อมูล
-              <PrivacyText>
-                <li>
-                  เราใช้มาตรการรักษาความปลอดภัยขั้นสูง เช่น การเข้ารหัสข้อมูล (encryption) การตรวจสอบสิทธิ์ (authentication) และการควบคุมการเข้าถึง
-                  (access control) เพื่อป้องกันการเข้าถึงข้อมูลโดยไม่ได้รับอนุญาต
-                </li>
-                <li>ผู้ใช้งานมีหน้าที่รับผิดชอบในการรักษาความลับของข้อมูลเข้าสู่ระบบ เช่น รหัสผ่าน และไม่ควรเปิดเผยข้อมูลดังกล่าวต่อบุคคลอื่น</li>
-                <li>ห้ามแชร์บัญชีผู้ใช้หรือรหัสผ่านกับบุคคลอื่นโดยไม่ได้รับอนุญาต</li>
-                <li>หากคุณสงสัยว่าข้อมูลของคุณถูกเข้าถึงโดยไม่ได้รับอนุญาต กรุณาแจ้งให้เราทราบทันที</li>
-              </PrivacyText>
+              Registration
+              <TermsText>
+                <BulletParagraph>
+                  To access certain features of the Platform, you must register for an account. You agree to provide accurate, current, and complete information during the registration process.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              การเข้าถึงและการใช้งาน
-              <PrivacyText>
-                <li>ผู้ใช้งานต้องใช้งานระบบเพื่อวัตถุประสงค์ทางการแพทย์และการบำบัดฟื้นฟูผู้ติดยาเสพติดเท่านั้น</li>
-                <li>ห้ามใช้งานระบบเพื่อการค้า การตลาด หรือวัตถุประสงค์อื่นใดที่ไม่เกี่ยวข้อง</li>
-                <li>ผู้ใช้งานต้องปฏิบัติตามกฎหมายและระเบียบที่เกี่ยวข้องกับการใช้งานระบบนี้</li>
-                <li>ผู้ใช้งานต้องไม่พยายามเจาะระบบหรือกระทำการใด ๆ ที่อาจก่อให้เกิดความเสียหายต่อระบบหรือข้อมูลในระบบ</li>
-                <li>ผู้ใช้งานต้องไม่ใช้ระบบเพื่อเผยแพร่หรือส่งข้อมูลที่เป็นอันตราย ข่มขู่ ก่อกวน หรือเป็นการละเมิดสิทธิของผู้อื่น</li>
-              </PrivacyText>
+              User Obligations
+              <TermsText>
+                <BulletParagraph>
+                  You must be at least 18 years old or the legal age of majority in your jurisdiction to use the Platform.
+                </BulletParagraph>
+                <BulletParagraph>
+                  You are solely responsible for your interactions with other users and clients on the Platform.
+                </BulletParagraph>
+                <BulletParagraph>
+                  You agree not to misuse the Platform, engage in any unlawful activities, or cause harm to the Platform’s infrastructure.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              การแก้ไขและยกเลิกการใช้งาน
-              <PrivacyText>
-                <li>ระบบขอสงวนสิทธิ์ในการแก้ไขข้อกำหนดและเงื่อนไขเหล่านี้เมื่อใดก็ได้โดยไม่ต้องแจ้งให้ทราบล่วงหน้า</li>
-                <li>
-                  การแก้ไขดังกล่าวจะมีผลทันทีที่เผยแพร่บนเว็บไซต์นี้
-                  ผู้ใช้งานควรตรวจสอบข้อกำหนดและเงื่อนไขเป็นประจำเพื่อให้แน่ใจว่าตนเข้าใจและยอมรับเงื่อนไขล่าสุด
-                </li>
-                <li>ระบบขอสงวนสิทธิ์ในการยกเลิกการเข้าถึงและการใช้งานระบบของผู้ใช้งานที่ไม่ปฏิบัติตามข้อกำหนดและเงื่อนไขเหล่านี้</li>
-                <li>หากผู้ใช้งานต้องการยกเลิกการใช้งานระบบ กรุณาติดต่อทีมงานเพื่อดำเนินการ</li>
-              </PrivacyText>
+              Intellectual Property
+              <TermsText>
+                <BulletParagraph>
+                  The Platform and all content, features, and functionality are owned by the Platform and are protected by intellectual property laws. You may not use any part of the Platform’s content without prior written permission.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              การจำกัดความรับผิด
-              <PrivacyText>
-                <li>ระบบนี้มีไว้เพื่อบันทึกข้อมูลการบำบัดรักษาและฟื้นฟูผู้ติดยาเสพติดเท่านั้น</li>
-                <li>
-                  เราไม่รับผิดชอบต่อความเสียหายใด ๆ ที่เกิดขึ้นจากการใช้งานระบบนี้ รวมถึงแต่ไม่จำกัดเพียงความเสียหายที่เกิดจากการสูญเสียข้อมูล
-                  หรือการเข้าถึงข้อมูลโดยไม่ได้รับอนุญาตจากตัวผู้ใช้งานเอง
-                </li>
-                <li>เราไม่รับประกันว่าระบบจะไม่มีข้อผิดพลาดหรือจะสามารถใช้งานได้อย่างต่อเนื่องและไม่มีปัญหา</li>
-              </PrivacyText>
+              Privacy Policy
+              <TermsText>
+                <BulletParagraph>
+                  Your use of the Platform is governed by our Privacy Policy. By using the Platform, you consent to the collection and use of your personal information as described in the Privacy Policy.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              การเชื่อมโยงไปยังเว็บไซต์อื่น
-              <PrivacyText>
-                <li>
-                  ระบบอาจมีการเชื่อมโยงข้อมูลไปยังเว็บไซต์อื่นที่ไม่อยู่ภายใต้การควบคุมของเรา
-                  เราไม่รับผิดชอบต่อเนื้อหาและนโยบายความเป็นส่วนตัวของเว็บไซต์เหล่านั้น
-                </li>
-                <li>การเชื่อมโยงไปยังเว็บไซต์อื่นเป็นเพียงการอำนวยความสะดวกให้ผู้ใช้งาน และไม่ได้หมายความว่าเราสนับสนุนหรือรับรองเว็บไซต์ดังกล่าว</li>
-              </PrivacyText>
+              Limitation of Liability
+              <TermsText>
+                <BulletParagraph>
+                  The Platform is not liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the Platform. This includes, but is not limited to, any loss of data, revenue, or opportunities.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              การติดต่อ
-              <PrivacyText>
-                <div>หากผู้ใช้งานมีคำถามหรือข้อกังวลใดๆ เกี่ยวกับข้อกำหนดและเงื่อนไขการใช้งาน กรุณาติดต่อทีมงานผ่านช่องทางที่ ดังต่อไปนี้</div>
-                <li>ที่อยู่อีเมล: antidrugnew@gmail.com</li>
-                <li>หมายเลขโทรศัพท์: 098-8273547</li>
-                <li>Line Official : @antidrug</li>
-              </PrivacyText>
+              Indemnity
+              <TermsText>
+                <BulletParagraph>
+                  You agree to indemnify and hold the Platform, its affiliates, and its employees harmless from any claims, damages, losses, or expenses arising from your use of the Platform.
+                </BulletParagraph>
+              </TermsText>
             </li>
 
             <li>
-              ข้อกำหนดอื่น ๆ
-              <PrivacyText>
-                <li>ข้อกำหนดและเงื่อนไขเหล่านี้จะถูกควบคุมและตีความตามกฎหมายของประเทศไทย </li>
-                <li>
-                  หากมีข้อกำหนดใดในข้อกำหนดและเงื่อนไขนี้ที่ไม่สามารถบังคับใช้ได้ ข้อกำหนดนั้นจะถูกตัดออกโดยไม่กระทบต่อข้อกำหนดอื่น ๆ ที่เหลืออยู่{" "}
-                </li>
-                <li>
-                  ข้อกำหนดและเงื่อนไขนี้เป็นข้อตกลงทั้งหมดระหว่างผู้ใช้งานและเราเกี่ยวกับการใช้งานระบบ การใช้ระบบแหล่งรวมงานสำหรับ
-                  Influencerนี้ถือว่าผู้ใช้งานได้ยอมรับข้อกำหนดและเงื่อนไขทั้งหมดที่ระบุไว้ในที่นี้
-                </li>
-              </PrivacyText>
+              Dispute Resolution
+              <TermsText>
+                <BulletParagraph>
+                  Any disputes related to these Terms or your use of the Platform shall be resolved through binding arbitration in accordance with the laws of [insert jurisdiction].
+                </BulletParagraph>
+              </TermsText>
             </li>
-          </PrivacyText>
+
+            <li>
+              Governing Law
+              <TermsText>
+                <BulletParagraph>
+                  These Terms shall be governed by and construed in accordance with the laws of [insert jurisdiction].
+                </BulletParagraph>
+              </TermsText>
+            </li>
+
+            <li>
+              Contact Us
+              <TermsText>
+                <BulletParagraph>
+                  For any questions or concerns regarding these Terms, please contact us at [contact@pops.com].
+                </BulletParagraph>
+              </TermsText>
+            </li>
+          </TermsText>
         </Box>
       </Container>
     </AppWrapper>
