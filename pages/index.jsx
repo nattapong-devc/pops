@@ -30,8 +30,7 @@ export default function Home() {
         >
           POPS is a platform designed to help influencers and businesses
           connect, collaborate, and grow their online presence. With easy access
-          to Instagram Business, Facebook Pages, and other social media
-          accounts, POPS allows you to manage your content, track performance
+          to Social media accounts, POPS allows you to manage your content, track performance
           insights, and optimize your marketing campaigns. Whether you’re an
           influencer seeking brand partnerships or a business looking to enhance
           engagement, POPS is your all-in-one solution for social media success.
@@ -147,7 +146,7 @@ const howToWorks = [
     id: 2,
     title: "Connect Social Media Accounts",
     description:
-      "After registration, users link their Instagram Business, Facebook Pages, and other social media accounts to the app.",
+      "After registration, users link their Social media accounts to the app.",
     icon: (
       <TapAndPlayRoundedIcon
         sx={{
