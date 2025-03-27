@@ -51,6 +51,25 @@ const BulletParagraph = styled.p`
 
 export default function TermsAndConditions() {
   return (
+    <> 
+      <Head>
+        <title>Terms and Conditions</title>
+        <meta name="description" content="This is the terms and conditions page of our website." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.yoursite.com/terms-and-conditions" />
+        {/* Schema Markup for Terms and Conditions */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Terms and Conditions",
+              "url": "https://www.yoursite.com/terms-and-conditions",
+              "description": "This is the terms and conditions page of our website."
+            }
+          `}
+        </script>
+      </Head>
     <AppWrapper>
       <Box
         sx={{
@@ -67,6 +86,8 @@ export default function TermsAndConditions() {
             textAlign: "center",
             fontFamily: "Noto Sans Thai",
           }}
+          component={"h1"}
+          variant="h1"
         >
           Terms and Conditions
         </Typography>
@@ -147,6 +168,7 @@ export default function TermsAndConditions() {
           </TermsText>
         </Box>
       </Container>
-    </AppWrapper>
+    </AppWrapper></>
+   
   );
 }

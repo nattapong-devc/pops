@@ -113,7 +113,7 @@ export default function Home() {
             fontWeight: "bold",
           }}
           >Privacy Policy</Link>
-          <Link href="/terms-of-service"
+          <Link href="/terms-and-conditions"
           style={{
             color: "#F7531D",
             fontFamily: "Noto Sans Thai",
