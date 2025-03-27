@@ -55,7 +55,7 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Head>
-        <title>Privacy Policy</title>
+        <title>POPS แหล่งรวมงานสำหรับ Influencer - Privacy Policy</title>
         <meta
           name="description"
           content="This is the privacy policy page of our website."

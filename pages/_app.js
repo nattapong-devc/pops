@@ -4,7 +4,7 @@ import Head from "next/head";
 export default function App({ Component, pageProps }) {
   return <>
   <Head>
-    <title>POPS</title>
+    <title>POPS แหล่งรวมงานสำหรับ Influencer</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     {/* tiktok verification */}
     <meta name="tiktok-verification" content="9vy1HlLfCgn4tmBu7nZqB58YXqlNC03n" />

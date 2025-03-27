@@ -54,7 +54,7 @@ export default function TermsAndConditions() {
   return (
     <> 
       <Head>
-        <title>Terms and Conditions</title>
+        <title>POPS แหล่งรวมงานสำหรับ Influencer - Terms and Conditions</title>
         <meta name="description" content="This is the terms and conditions page of our website." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.yoursite.com/terms-and-conditions" />
