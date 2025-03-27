@@ -11,6 +11,10 @@ export default function App({ Component, pageProps }) {
 
     {/* Icon */}
     <link rel="icon" href="/favicon.ico" />
+
+  {/* Google bot */}
+  <meta name="googlebot" content="index, follow" />
+  <meta name="robots" content="index, follow" />
   </Head>
   
   <Component {...pageProps} /></>;

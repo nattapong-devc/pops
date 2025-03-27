@@ -9,6 +9,7 @@ import InsightsRoundedIcon from "@mui/icons-material/InsightsRounded";
 import ContentPasteRoundedIcon from "@mui/icons-material/ContentPasteRounded";
 import CampaignRoundedIcon from "@mui/icons-material/CampaignRounded";
 import Groups3RoundedIcon from "@mui/icons-material/Groups3Rounded";
+import Link from "next/link";
 export default function Home() {
   return (
     <AppWrapper>
@@ -102,6 +103,25 @@ export default function Home() {
               </Box>
             ))}
           </Box>
+        </Box>
+
+        <Box className="flex flex-row justify-center gap-5">
+          <Link href="/privacy-policy"
+          style={{
+            color: "#F7531D",
+            fontFamily: "Noto Sans Thai",
+            fontSize: "1.1rem",
+            fontWeight: "bold",
+          }}
+          >Privacy Policy</Link>
+          <Link href="/terms-of-service"
+          style={{
+            color: "#F7531D",
+            fontFamily: "Noto Sans Thai",
+            fontSize: "1.1rem",
+            fontWeight: "bold",
+          }}
+          >Terms and Conditions</Link>
         </Box>
       </Container>
     </AppWrapper>
