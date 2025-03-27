@@ -2,6 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import styled from "@emotion/styled";
 import AppWrapper from "@/components/hoc/AppWrapper";
+import Head from "next/head";
 
 const TermsText = styled.ol`
   list-style-type: none;
