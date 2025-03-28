@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  images: {
+    unoptimized: true,
+    domains: ["*"],
+  },
+
   env: {
     USER_ACCESS_TOKEN_KEY: "pops_access_token",
     BASE_URL:
