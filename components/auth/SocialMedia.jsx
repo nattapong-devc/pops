@@ -54,27 +54,22 @@ export default function SocialMedia() {
 
               const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
 
-            const popup =   window.open(
+              const popup = window.open(
                 url,
                 "Instagram",
                 `width=${width},height=${height},left=${left},top=${top}`
               );
-              
+
               console.log(popup);
 
-  //ปิด popup หลังจากที่ login สำเร็จ
-
-    window.addEventListener("message", (event) => {
-        console.log(event);
-      if (event.origin.includes("https://pops-phi.vercel.app")) {
-        console.log(event.data);
-        popup.close();
-      }
-    });
-            
+              //ปิด popup หลังจากที่ login สำเร็จ
+              window.addEventListener("message", (event) => {
+                console.log("📩 ได้รับ message จาก popup", event);
+                if (event.data && event.data.code) {
+                  console.log("✅ ได้รับ OAuth Code:", event.data.code);
+                }
+              });
             }}
-
-          
           >
             Connect
           </Button>

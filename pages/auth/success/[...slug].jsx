@@ -4,10 +4,16 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
 
 const Success = () => {
+
+
+
+
   const router = useRouter();
   const { code } = router.query;
 
   useEffect(() => {
+    console.log("🚀 ~ file: [...slug].jsx ~ line 10 ~ Success ~ code", code);
+    console.log(window.opener);
     if (window.opener && code) {
       setTimeout(() => {
         console.log("✅ ส่ง OAuth Code กลับไปยัง parent window:", code);

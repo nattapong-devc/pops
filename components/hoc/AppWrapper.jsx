@@ -28,7 +28,7 @@ const drawerWidth = 240;
 
 function DrawerAppBar(props) {
   const router = useRouter();
-  const { user } = useUserContext();
+  const { user, signOut } = useUserContext();
 
   const { window, children } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -125,7 +125,12 @@ function DrawerAppBar(props) {
                   Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    signOut();
+                    handleClose();
+                  }}
+                >
                   <LogoutRoundedIcon sx={{ marginRight: 1 }} />
                   Logout
                 </MenuItem>

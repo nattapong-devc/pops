@@ -69,14 +69,14 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
-
-    if (user.username == "test_user" && user.password == "test_password") {
-      signin("ztLTYk03Vho3dXrDoW2XZFIUIKzXwYP5");
-
-      handleClose();
-    } else {
-      alert("Invalid username or password");
+    if (!validate()) {
+      if (user.username == "test_user" && user.password == "test_password") {
+        signin("ztLTYk03Vho3dXrDoW2XZFIUIKzXwYP5");
+        
+        setOpen(false);
+      } else {
+        alert("Invalid username or password");
+      }
     }
   };
 
