@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
 export default function SocialMedia() {
@@ -31,16 +31,25 @@ export default function SocialMedia() {
     }
   };
 
-  let initializedFacebook = false;
+  const initializedFacebook = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
+
   useEffect(() => {
-    const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
-    if (oauth_code_facebook && !initializedFacebook) {
-      initializedFacebook = true;
+    const intervalId = setInterval(() => {
+      const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
 
-      handleFindFacebookData(oauth_code_facebook);
-    }
-  }, [localStorage.getItem("oauth_code_facebook")]);
+      if (oauth_code_facebook && !initializedFacebook.current) {
+        initializedFacebook.current = true;
+        handleFindFacebookData(oauth_code_facebook);
+        
+        // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
+        localStorage.removeItem("oauth_code_facebook");
+      }
+    }, 1000);
 
+    return () => {
+      clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
+    };
+  }, []);
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
