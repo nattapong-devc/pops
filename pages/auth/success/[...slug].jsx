@@ -4,22 +4,13 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
 
 const Success = () => {
-
-
-
-
   const router = useRouter();
   const { code } = router.query;
 
   useEffect(() => {
-    console.log("🚀 ~ file: [...slug].jsx ~ line 10 ~ Success ~ code", code);
-    console.log(window.opener);
-    if (window.opener && code) {
-      setTimeout(() => {
-        console.log("✅ ส่ง OAuth Code กลับไปยัง parent window:", code);
-        window.opener.postMessage({ code }, "*");
-        window.close(); // ปิด popup
-      }, 3000);
+    if (code) {
+      localStorage.setItem(`oauth_code_${router.query.slug}`, code);
+      window.close();
     }
   }, [code]);
   return (
@@ -55,20 +46,6 @@ const Success = () => {
           textAlign={"center"}
         >
           Successfully connected
-        </Typography>
-        <Typography
-          variant="caption"
-          fontWeight={"bold"}
-          textAlign={"center"}
-          sx={{
-            textWrap: "wrap",
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
-            width: "100%",
-            color: "gray",
-          }}
-        >
-          {code}
         </Typography>
       </Box>
     </Container>
