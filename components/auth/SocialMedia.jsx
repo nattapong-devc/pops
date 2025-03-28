@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
+import InstagramIcon from "@mui/icons-material/Instagram";
 export default function SocialMedia() {
   const FACEBOOK_CLIENT_ID = "2235829596835938";
   const FACEBOOK_REDIRECT_URI =
@@ -16,6 +17,24 @@ export default function SocialMedia() {
       params: {
         scope:
           "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
+      },
+    },
+  };
+
+  const INSTAGRAM_CLIENT_ID = "1654872321791189";
+  const INSTAGRAM_REDIRECT_URI =
+    "https://pops-phi.vercel.app/auth/success/instagram";
+
+  const currentProviderInstagram = {
+    name: "Instagram",
+    clientId: INSTAGRAM_CLIENT_ID,
+    redirect_url: INSTAGRAM_REDIRECT_URI,
+    loginUrl: "https://api.instagram.com/oauth/authorize",
+
+    authorization: {
+      params: {
+        scope:
+          "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };
@@ -40,7 +59,7 @@ export default function SocialMedia() {
       if (oauth_code_facebook && !initializedFacebook.current) {
         initializedFacebook.current = true;
         handleFindFacebookData(oauth_code_facebook);
-        
+
         // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
         localStorage.removeItem("oauth_code_facebook");
       }
@@ -57,7 +76,6 @@ export default function SocialMedia() {
           <Typography>
             <FacebookIcon
               sx={{
-                color: "#1877F2",
                 fontSize: "2rem",
                 marginRight: "1rem",
               }}
@@ -77,9 +95,6 @@ export default function SocialMedia() {
               },
             }}
             onClick={() => {
-              //remove old code
-              localStorage.removeItem("oauth_code_facebook");
-
               //open new window
               const width = 800;
               const height = 800;
@@ -88,6 +103,48 @@ export default function SocialMedia() {
 
               const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
 
+              window.open(
+                url,
+                "Facebook",
+                `width=${width},height=${height},left=${left},top=${top}`
+              );
+            }}
+          >
+            Connect
+          </Button>
+        </Box>
+        <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
+          <Typography>
+            <InstagramIcon
+              sx={{
+                fontSize: "2rem",
+                marginRight: "1rem",
+              }}
+            />
+            Instagram
+          </Typography>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            sx={{
+              borderRadius: "8px",
+              background:
+                "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
+              color: "white",
+              "&:hover": {
+                background:
+                  "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
+              },
+            }}
+            onClick={() => {
+              //open new window
+              const width = 800;
+              const height = 800;
+              const left = window.innerWidth / 2 - width / 2;
+              const top = window.innerHeight / 2 - height / 2;
+
+              const url = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
               window.open(
                 url,
                 "Instagram",

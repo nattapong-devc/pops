@@ -8,14 +8,14 @@ const Success = () => {
   const { code } = router.query;
 
   useEffect(() => {
-    if (code) {
+    if (code && router.query.slug) {
       localStorage.setItem(`oauth_code_${router.query.slug}`, code);
 
       setTimeout(() => {
         window.close();
       }, 3000);
     }
-  }, [code]);
+  }, [code, router.query.slug]);
   return (
     <Container
       maxWidth="sm"
