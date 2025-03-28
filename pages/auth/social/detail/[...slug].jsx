@@ -1,25 +1,18 @@
-import { useRouter } from "next/router";
-import AppWrapper from "@/components/hoc/AppWrapper";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
-import axios from "axios";
-import React, { useState } from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import CardInfo from "@/components/card/CardInfo";
+import AppWrapper from "@/components/hoc/AppWrapper";
+import { useUserContext } from "@/contexts/UserContext";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import {
-  BarChart,
-  ChartContainer,
-  PieChart,
-  ResponsiveChartContainer,
+    Avatar,
+    Box,
+    Container,
+    Typography
+} from "@mui/material";
+import {
+    BarChart,
+    PieChart
 } from "@mui/x-charts";
-import { useUserContext } from "@/contexts/UserContext";
+import { useRouter } from "next/router";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
