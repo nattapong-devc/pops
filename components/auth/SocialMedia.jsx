@@ -126,7 +126,41 @@ export default function SocialMedia() {
           </Typography>
 
           {user.facebook ? (
-            <></>
+            <>
+              {" "}
+              <Box className="flex flex-row gap-5">
+                {/* <Button
+              size="small"
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: "#FF0000",
+                color: "white",
+                px: 2,
+                "&:hover": {
+                  backgroundColor: "#FF0000",
+                },
+              }}
+            >
+              Disconnect
+            </Button> */}
+                <Button
+                  size="small"
+                  sx={{
+                    borderRadius: "8px",
+                    backgroundColor: "#FF7A00",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#FF7A00",
+                    },
+                  }}
+                  onClick={() => {
+                    router.push("/auth/social/detail/facebook");
+                  }}
+                >
+                  information
+                </Button>
+              </Box>
+            </>
           ) : (
             <>
               <Button
@@ -174,7 +208,7 @@ export default function SocialMedia() {
           </Typography>
           {user.instagram ? (
             <Box className="flex flex-row gap-5">
-              <Button
+              {/* <Button
                 size="small"
                 sx={{
                   borderRadius: "8px",
@@ -187,7 +221,7 @@ export default function SocialMedia() {
                 }}
               >
                 Disconnect
-              </Button>
+              </Button> */}
               <Button
                 size="small"
                 sx={{
@@ -198,10 +232,9 @@ export default function SocialMedia() {
                     backgroundColor: "#FF7A00",
                   },
                 }}
-
                 onClick={() => {
-                    router.push("/auth/social/detail/instagram");
-                    }}
+                  router.push("/auth/social/detail/instagram");
+                }}
               >
                 information
               </Button>
