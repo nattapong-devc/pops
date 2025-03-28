@@ -31,6 +31,16 @@ export default function SocialMedia() {
     }
   };
 
+  let initializedFacebook = false;
+  useEffect(() => {
+    const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
+    if (oauth_code_facebook && !initializedFacebook) {
+      initializedFacebook = true;
+
+      handleFindFacebookData(oauth_code_facebook);
+    }
+  }, []);
+
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
@@ -61,7 +71,6 @@ export default function SocialMedia() {
               //remove old code
               localStorage.removeItem("oauth_code_facebook");
 
-
               //open new window
               const width = 800;
               const height = 800;
@@ -75,12 +84,6 @@ export default function SocialMedia() {
                 "Instagram",
                 `width=${width},height=${height},left=${left},top=${top}`
               );
-
-              //listen for message
-              if (localStorage.getItem("oauth_code_facebook")) {
-                let code = localStorage.getItem("oauth_code_facebook");
-                handleFindFacebookData(code);
-              }
             }}
           >
             Connect
