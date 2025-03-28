@@ -32,7 +32,11 @@ const Success = () => {
             color: "green",
           }}
         />
-        <Typography variant="h1" fontWeight={"bold"} textAlign={"center"}>
+        <Typography 
+       sx={{
+        fontSize: 24,
+       }} 
+        fontWeight={"bold"} textAlign={"center"}>
           Successfully connected
         </Typography>
         <Typography
