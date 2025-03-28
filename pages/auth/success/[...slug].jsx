@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ const Success = () => {
   const router = useRouter();
   const { code } = router.query;
   const [codeKey, setCodeKey] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (code && router.query.slug) {
@@ -17,6 +18,8 @@ const Success = () => {
         window.close();
       }, 3000);
     }
+
+    setLoading(false);
   }, [code, router.query.slug]);
   return (
     <Container
@@ -26,66 +29,79 @@ const Success = () => {
         height: "100dvh",
       }}
     >
-      {codeKey ? (
-        <>
-          {" "}
-          <Box
+      {loading ? (
+        <Box className="flex flex-col items-center gap-5 w-full justify-center">
+          <CircularProgress
             sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              p: 3,
-              gap: 5,
+              fontSize: 150,
             }}
-          >
-            <CheckCircleRoundedIcon
-              sx={{
-                fontSize: 150,
-                color: "green",
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: 24,
-              }}
-              fontWeight={"bold"}
-              textAlign={"center"}
-            >
-              Successfully connected
-            </Typography>
-          </Box>
-        </>
+          />
+          <Typography>Loading...</Typography>
+        </Box>
       ) : (
         <>
-          <Box
-            sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              p: 3,
-              gap: 5,
-            }}
-          >
-            <ErrorOutlineRoundedIcon
-              sx={{
-                fontSize: 150,
-                color: "red",
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: 24,
-              }}
-              fontWeight={"bold"}
-              textAlign={"center"}
-            >
-              Successfully connected
-            </Typography>
-          </Box>
+          {" "}
+          {codeKey ? (
+            <>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 3,
+                  gap: 5,
+                }}
+              >
+                <CheckCircleRoundedIcon
+                  sx={{
+                    fontSize: 150,
+                    color: "green",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: 24,
+                  }}
+                  fontWeight={"bold"}
+                  textAlign={"center"}
+                >
+                  Successfully connected
+                </Typography>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 3,
+                  gap: 5,
+                }}
+              >
+                <ErrorOutlineRoundedIcon
+                  sx={{
+                    fontSize: 150,
+                    color: "red",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: 24,
+                  }}
+                  fontWeight={"bold"}
+                  textAlign={"center"}
+                >
+                  Successfully connected
+                </Typography>
+              </Box>
+            </>
+          )}
         </>
       )}
     </Container>
