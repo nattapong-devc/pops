@@ -3,7 +3,12 @@ import React, { useEffect, useRef } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import { useUserContext } from "@/contexts/UserContext";
+import { useRouter } from "next/router";
 export default function SocialMedia() {
+  const { social, user } = useUserContext();
+  const router = useRouter();
+
   const FACEBOOK_CLIENT_ID = "2235829596835938";
   const FACEBOOK_REDIRECT_URI =
     "https://pops-phi.vercel.app/auth/success/facebook";
@@ -43,7 +48,7 @@ export default function SocialMedia() {
     try {
       const res = await axios.post("/api/facebook", { code });
       if (res.data.status === "success") {
-        console.log(res.data);
+        social("facebook", res.data.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -55,6 +60,7 @@ export default function SocialMedia() {
       const res = await axios.post("/api/instagram", { code });
       if (res.data.status === "success") {
         console.log(res.data);
+        social("instagram", res.data.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -101,6 +107,10 @@ export default function SocialMedia() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
@@ -114,36 +124,43 @@ export default function SocialMedia() {
             />
             Facebook
           </Typography>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            sx={{
-              borderRadius: "8px",
-              backgroundColor: "#1877F2",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#1877F2",
-              },
-            }}
-            onClick={() => {
-              //open new window
-              const width = 800;
-              const height = 800;
-              const left = window.innerWidth / 2 - width / 2;
-              const top = window.innerHeight / 2 - height / 2;
 
-              const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
+          {user.facebook ? (
+            <></>
+          ) : (
+            <>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "#1877F2",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1877F2",
+                  },
+                }}
+                onClick={() => {
+                  //open new window
+                  const width = 800;
+                  const height = 800;
+                  const left = window.innerWidth / 2 - width / 2;
+                  const top = window.innerHeight / 2 - height / 2;
 
-              window.open(
-                url,
-                "Facebook",
-                `width=${width},height=${height},left=${left},top=${top}`
-              );
-            }}
-          >
-            Connect
-          </Button>
+                  const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
+
+                  window.open(
+                    url,
+                    "Facebook",
+                    `width=${width},height=${height},left=${left},top=${top}`
+                  );
+                }}
+              >
+                Connect
+              </Button>
+            </>
+          )}
         </Box>
         <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
           <Typography>
@@ -155,37 +172,75 @@ export default function SocialMedia() {
             />
             Instagram
           </Typography>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            sx={{
-              borderRadius: "8px",
-              background:
-                "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
-              color: "white",
-              "&:hover": {
-                background:
-                  "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
-              },
-            }}
-            onClick={() => {
-              //open new window
-              const width = 800;
-              const height = 800;
-              const left = window.innerWidth / 2 - width / 2;
-              const top = window.innerHeight / 2 - height / 2;
+          {user.instagram ? (
+            <Box className="flex flex-row gap-5">
+              <Button
+                size="small"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "#FF0000",
+                  color: "white",
+                  px: 2,
+                  "&:hover": {
+                    backgroundColor: "#FF0000",
+                  },
+                }}
+              >
+                Disconnect
+              </Button>
+              <Button
+                size="small"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "#FF7A00",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#FF7A00",
+                  },
+                }}
 
-              const url = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
-              window.open(
-                url,
-                "Instagram",
-                `width=${width},height=${height},left=${left},top=${top}`
-              );
-            }}
-          >
-            Connect
-          </Button>
+                onClick={() => {
+                    router.push("/auth/social/detail/instagram");
+                    }}
+              >
+                information
+              </Button>
+            </Box>
+          ) : (
+            <>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                sx={{
+                  borderRadius: "8px",
+                  background:
+                    "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
+                  color: "white",
+                  "&:hover": {
+                    background:
+                      "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
+                  },
+                }}
+                onClick={() => {
+                  //open new window
+                  const width = 800;
+                  const height = 800;
+                  const left = window.innerWidth / 2 - width / 2;
+                  const top = window.innerHeight / 2 - height / 2;
+
+                  const url = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
+                  window.open(
+                    url,
+                    "Instagram",
+                    `width=${width},height=${height},left=${left},top=${top}`
+                  );
+                }}
+              >
+                Connect
+              </Button>
+            </>
+          )}
         </Box>
       </Container>
     </Box>

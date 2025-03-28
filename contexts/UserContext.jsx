@@ -8,6 +8,7 @@ const initialState = {
   signin: (token) => {},
   signOut: () => {},
   getUserData: () => {},
+  social: (name, data) => {},
 };
 
 export const UserContext = createContext(initialState);
@@ -57,10 +58,43 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const social = async (name, data) => {
+    let user = state.user;
+
+    if (name === "instagram") {
+      console.log(data);
+
+      console.log("set instagram data");
+
+      //set instagram data in user context
+
+      user = {
+        ...user,
+        instagram: data,
+      };
+    }
+
+    if (name === "facebook") {
+      console.log(data);
+
+      console.log("set facebook data");
+
+      //set facebook data in user context
+
+      user = {
+        ...user,
+        facebook: data,
+      };
+    }
+
+    setUser(user);
+  };
+
   const functionContainer = {
     signin,
     signOut,
     getUserData,
+    social,
   };
   const setUser = (user) => {
     dispatch({ type: "SET_USER", payload: user });
