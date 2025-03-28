@@ -1,8 +1,24 @@
 import { useRouter } from "next/router";
-import React from "react";
 import AppWrapper from "@/components/hoc/AppWrapper";
-import { Box, Typography } from "@mui/material";
-import { useUserContext } from "@/contexts/UserContext";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import CardInfo from "@/components/card/CardInfo";
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
+import {
+  BarChart,
+  ChartContainer,
+  PieChart,
+  ResponsiveChartContainer,
+} from "@mui/x-charts";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
@@ -32,7 +48,7 @@ export default function SocialDetail() {
       </Box>
 
       {router.query.slug == "instagram" && user?.instagram && (
-        <>
+          <Container maxWidth="lg" className="flex flex-col gap-4 py-10">
           <Box className="flex flex-col gap-4 w-full ">
             <Box className="flex flex-row gap-4 shadow-lg p-4 rounded-xl items-center">
               <Avatar
@@ -262,7 +278,7 @@ export default function SocialDetail() {
               />
             </Box>
           </Box>
-        </>
+        </Container>
       )}
     </AppWrapper>
   );
