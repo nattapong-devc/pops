@@ -39,7 +39,7 @@ export default function SocialMedia() {
 
       handleFindFacebookData(oauth_code_facebook);
     }
-  }, []);
+  }, [localStorage.getItem("oauth_code_facebook")]);
 
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
