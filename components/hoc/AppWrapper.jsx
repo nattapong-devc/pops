@@ -129,6 +129,7 @@ function DrawerAppBar(props) {
                   onClick={() => {
                     signOut();
                     handleClose();
+                    router.push("/");
                   }}
                 >
                   <LogoutRoundedIcon sx={{ marginRight: 1 }} />
