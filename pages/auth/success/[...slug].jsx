@@ -10,7 +10,10 @@ const Success = () => {
   useEffect(() => {
     if (code) {
       localStorage.setItem(`oauth_code_${router.query.slug}`, code);
-      window.close();
+
+      setTimeout(() => {
+        window.close();
+      }, 3000);
     }
   }, [code]);
   return (

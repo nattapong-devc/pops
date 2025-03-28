@@ -1,10 +1,10 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import axios from "axios";
 export default function SocialMedia() {
   const FACEBOOK_CLIENT_ID = "2235829596835938";
   const FACEBOOK_REDIRECT_URI =
-    // "https://ec2-13-212-60-65.ap-southeast-1.compute.amazonaws.com:81/social/success/facebook";
     "https://pops-phi.vercel.app/auth/success/facebook";
   const currentProviderFacebook = {
     name: "Facebook",
@@ -18,6 +18,17 @@ export default function SocialMedia() {
           "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
       },
     },
+  };
+
+  const handleFindFacebookData = async (code) => {
+    try {
+      const res = await axios.post("/api/facebook", { code });
+      if (res.data.status === "success") {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -47,6 +58,11 @@ export default function SocialMedia() {
               },
             }}
             onClick={() => {
+              //remove old code
+              localStorage.removeItem("oauth_code_facebook");
+
+
+              //open new window
               const width = 800;
               const height = 800;
               const left = window.innerWidth / 2 - width / 2;
@@ -54,21 +70,17 @@ export default function SocialMedia() {
 
               const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
 
-              const popup = window.open(
+              window.open(
                 url,
                 "Instagram",
                 `width=${width},height=${height},left=${left},top=${top}`
               );
 
-              console.log(popup);
-
-              //ปิด popup หลังจากที่ login สำเร็จ
-              window.addEventListener("message", (event) => {
-                console.log("📩 ได้รับ message จาก popup", event);
-                if (event.data && event.data.code) {
-                  console.log("✅ ได้รับ OAuth Code:", event.data.code);
-                }
-              });
+              //listen for message
+              if (localStorage.getItem("oauth_code_facebook")) {
+                let code = localStorage.getItem("oauth_code_facebook");
+                handleFindFacebookData(code);
+              }
             }}
           >
             Connect
