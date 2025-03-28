@@ -5,6 +5,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
@@ -14,6 +16,8 @@ import Image from "next/image";
 import { LOGO } from "@/assets";
 import { useUserContext } from "@/contexts/UserContext";
 import httpRequest from "@/utils/httpRequest";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 export default function SignIn() {
   const { signin } = useUserContext();
@@ -31,7 +35,14 @@ export default function SignIn() {
   const [user, setUser] = useState(initUser);
   const [userError, setUserError] = useState(initUserError);
 
+  const [passwordShow, setPasswordShow] = useState(false);
+
   const [open, setOpen] = useState(false);
+
+
+  const handlePasswordShow = () => {
+    setPasswordShow(!passwordShow);
+    };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -156,6 +167,7 @@ export default function SignIn() {
                 label="Password"
                 variant="outlined"
                 name="password"
+                type={passwordShow ? "text" : "password"}
                 value={user.password}
                 onChange={handleChange}
                 fullWidth
@@ -165,6 +177,21 @@ export default function SignIn() {
                     borderRadius: "8px",
                   },
                 }}
+                slotProps={{
+                    input: {
+                        endAdornment: (
+                            <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handlePasswordShow}
+                                edge="end"
+                            >
+                                {passwordShow ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                            </InputAdornment>
+                        ),
+                    },
+                  }}
                 error={userError.password.length > 0}
                 helperText={userError.password}
               />
