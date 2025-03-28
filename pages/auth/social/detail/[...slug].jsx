@@ -19,6 +19,7 @@ import {
   PieChart,
   ResponsiveChartContainer,
 } from "@mui/x-charts";
+import { useUserContext } from "@/contexts/UserContext";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
