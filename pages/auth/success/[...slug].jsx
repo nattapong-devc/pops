@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
 
@@ -7,6 +7,15 @@ const Success = () => {
   const router = useRouter();
   const { code } = router.query;
 
+  useEffect(() => {
+    if (window.opener && code) {
+      setTimeout(() => {
+        console.log("✅ ส่ง OAuth Code กลับไปยัง parent window:", code);
+        window.opener.postMessage({ code }, "*");
+        window.close(); // ปิด popup
+      }, 3000);
+    }
+  }, [code]);
   return (
     <Container
       maxWidth="sm"
@@ -32,11 +41,13 @@ const Success = () => {
             color: "green",
           }}
         />
-        <Typography 
-       sx={{
-        fontSize: 24,
-       }} 
-        fontWeight={"bold"} textAlign={"center"}>
+        <Typography
+          sx={{
+            fontSize: 24,
+          }}
+          fontWeight={"bold"}
+          textAlign={"center"}
+        >
           Successfully connected
         </Typography>
         <Typography

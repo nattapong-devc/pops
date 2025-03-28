@@ -2,10 +2,10 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import React from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 export default function SocialMedia() {
-  const FACEBOOK_CLIENT_ID = "1302998961028389";
+  const FACEBOOK_CLIENT_ID = "2235829596835938";
   const FACEBOOK_REDIRECT_URI =
-    "https://ec2-13-212-60-65.ap-southeast-1.compute.amazonaws.com:81/social/success/facebook";
-
+    // "https://ec2-13-212-60-65.ap-southeast-1.compute.amazonaws.com:81/social/success/facebook";
+    "https://pops-phi.vercel.app/auth/success/facebook";
   const currentProviderFacebook = {
     name: "Facebook",
     clientId: FACEBOOK_CLIENT_ID,
@@ -47,19 +47,34 @@ export default function SocialMedia() {
               },
             }}
             onClick={() => {
-              const width = 500;
+              const width = 800;
               const height = 800;
               const left = window.innerWidth / 2 - width / 2;
               const top = window.innerHeight / 2 - height / 2;
 
               const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
 
-              window.open(
+            const popup =   window.open(
                 url,
                 "Instagram",
-                `width=500,height=800,left=${left},top=${top}`
+                `width=${width},height=${height},left=${left},top=${top}`
               );
+              
+              console.log(popup);
+
+  //ปิด popup หลังจากที่ login สำเร็จ
+
+    window.addEventListener("message", (event) => {
+        console.log(event);
+      if (event.origin.includes("https://pops-phi.vercel.app")) {
+        console.log(event.data);
+        popup.close();
+      }
+    });
+            
             }}
+
+          
           >
             Connect
           </Button>
