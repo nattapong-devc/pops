@@ -50,6 +50,17 @@ export default function SocialMedia() {
     }
   };
 
+  const handleFindInstagramData = async (code) => {
+    try {
+      const res = await axios.post("/api/instagram", { code });
+      if (res.data.status === "success") {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const initializedFacebook = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
 
   useEffect(() => {
@@ -69,6 +80,27 @@ export default function SocialMedia() {
       clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
     };
   }, []);
+
+  const initializedInstagram = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const oauth_code_instagram = localStorage.getItem("oauth_code_instagram");
+
+      if (oauth_code_instagram && !initializedInstagram.current) {
+        initializedInstagram.current = true;
+        handleFindInstagramData(oauth_code_instagram);
+
+        // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
+        localStorage.removeItem("oauth_code_instagram");
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
+    };
+  }, []);
+
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
