@@ -19,9 +19,10 @@ export default function Home() {
         width={1920}
         height={1080}
         style={{ width: "100%", height: "auto" }}
+        draggable={false}
       />
 
-      <Container className="py-12 flex flex-col gap-12">
+      <Container className="py-12 flex flex-col gap-12 ">
         <Typography
           sx={{
             textAlign: "center",
@@ -30,10 +31,11 @@ export default function Home() {
         >
           POPS is a platform designed to help influencers and businesses
           connect, collaborate, and grow their online presence. With easy access
-          to Social media accounts, POPS allows you to manage your content, track performance
-          insights, and optimize your marketing campaigns. Whether you’re an
-          influencer seeking brand partnerships or a business looking to enhance
-          engagement, POPS is your all-in-one solution for social media success.
+          to Social media accounts, POPS allows you to manage your content,
+          track performance insights, and optimize your marketing campaigns.
+          Whether you’re an influencer seeking brand partnerships or a business
+          looking to enhance engagement, POPS is your all-in-one solution for
+          social media success.
         </Typography>
 
         <Box className="flex flex-col gap-8">
@@ -105,22 +107,28 @@ export default function Home() {
         </Box>
 
         <Box className="flex flex-row justify-center gap-5">
-          <Link href="/privacy-policy"
-          style={{
-            color: "#F7531D",
-            fontFamily: "Noto Sans Thai",
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-          }}
-          >Privacy Policy</Link>
-          <Link href="/terms-and-conditions"
-          style={{
-            color: "#F7531D",
-            fontFamily: "Noto Sans Thai",
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-          }}
-          >Terms and Conditions</Link>
+          <Link
+            href="/privacy-policy"
+            style={{
+              color: "#F7531D",
+              fontFamily: "Noto Sans Thai",
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+            }}
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="/terms-and-conditions"
+            style={{
+              color: "#F7531D",
+              fontFamily: "Noto Sans Thai",
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+            }}
+          >
+            Terms and Conditions
+          </Link>
         </Box>
       </Container>
     </AppWrapper>

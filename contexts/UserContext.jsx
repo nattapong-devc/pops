@@ -1,0 +1,98 @@
+"use client";
+import { PROFILE } from "@/assets";
+import { useRouter } from "next/navigation";
+import { createContext, useContext, useEffect, useReducer } from "react";
+
+const initialState = {
+  user: null,
+  signin: (token) => {},
+  signOut: () => {},
+  getUserData: () => {},
+};
+
+export const UserContext = createContext(initialState);
+
+export const useUserContext = () => {
+  return useContext(UserContext);
+};
+
+export const UserProvider = ({ children }) => {
+  const router = useRouter();
+  const [state, dispatch] = useReducer(userReducer, initialState);
+
+  const signin = (token) => {
+    const key = process.env.USER_ACCESS_TOKEN_KEY;
+
+    if (key) {
+      localStorage.setItem(key, token);
+      getUserData();
+    }
+  };
+
+  const signOut = () => {
+    const key = process.env.USER_ACCESS_TOKEN_KEY;
+
+    if (key) {
+      localStorage.removeItem(key);
+      setUser(null);
+      router.push("/");
+    }
+  };
+
+  const getUserData = async () => {
+    // // get user data
+    // const res = await httpRequest("get", "/v2/kol/profiles");
+
+    // console.log(res);
+
+    // if (res.status == "error") return;
+
+    // setUser(res.data);
+
+    setUser({
+      username: "test_user",
+      firstName: "Test",
+      lastName: "User",
+      profile: PROFILE.src,
+    });
+  };
+
+  const functionContainer = {
+    signin,
+    signOut,
+    getUserData,
+  };
+  const setUser = (user) => {
+    dispatch({ type: "SET_USER", payload: user });
+  };
+
+  useEffect(() => {
+    const key = process.env.USER_ACCESS_TOKEN_KEY;
+    const token = key ? localStorage.getItem(key) : null;
+
+    if (token) {
+      //get user data
+      getUserData();
+    } else {
+      setUser(null);
+    }
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ ...state, ...functionContainer }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+const userReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    default:
+      return state;
+  }
+};

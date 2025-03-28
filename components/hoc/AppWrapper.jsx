@@ -17,12 +17,30 @@ import Button from "@mui/material/Button";
 import Image from "next/image";
 import { LOGO } from "@/assets";
 import Link from "next/link";
+import { Avatar, Menu, MenuItem } from "@mui/material";
+import { useUserContext } from "@/contexts/UserContext";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import SignIn from "../auth/SignIn";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
 function DrawerAppBar(props) {
+  const router = useRouter();
+  const { user } = useUserContext();
+
   const { window, children } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(false);
+  };
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -43,7 +61,12 @@ function DrawerAppBar(props) {
           backgroundColor: "white",
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Box
             sx={{
               py: 1,
@@ -53,6 +76,66 @@ function DrawerAppBar(props) {
               <Image src={LOGO.src} width={150} height={150} alt="logo" />
             </Link>
           </Box>
+
+          {user ? (
+            <>
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                startIcon={<Avatar src={user?.profile} />}
+                sx={{
+                  borderRadius: "8px",
+                  px: 2,
+                }}
+              >
+                <Typography
+                  className="normal-case font-bold"
+                  sx={{
+                    fontWeight: "bold",
+                    textTransform: "none",
+                  }}
+                >
+                  {user?.firstName} {user?.lastName}
+                </Typography>
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                sx={{
+                  " & .MuiMenu-paper": {
+                    borderRadius: "8px",
+                    minWidth: "180px",
+                    padding: 1,
+                  },
+                  "& .MuiList-root": {
+                    padding: 0,
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMenuItem-root": {
+                    borderRadius: "8px",
+                  },
+                }}
+              >
+                <MenuItem onClick={() => router.push("/auth/profile")}>
+                  <AccountCircleRoundedIcon sx={{ marginRight: 1 }} />
+                  Profile
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>
+                  <LogoutRoundedIcon sx={{ marginRight: 1 }} />
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <SignIn />
+            </>
+          )}
         </Toolbar>
       </AppBar>
 
