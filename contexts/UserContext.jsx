@@ -60,7 +60,7 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const social = (name, data) => {
+  const social = async(name, data) => {
     let socialData = state.socialData;
 
     if (name === "instagram") {
