@@ -71,7 +71,7 @@ export const UserProvider = ({ children }) => {
       socialData = {
         ...socialData,
         instagram: data,
-        facebook: data.facebook,
+        facebook: socialData?.facebook
       };
     }
 
@@ -83,7 +83,7 @@ export const UserProvider = ({ children }) => {
       socialData = {
         ...socialData,
         facebook: data,
-        instagram: data.instagram,
+        instagram: socialData?.instagram
       };
     }
 
