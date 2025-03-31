@@ -22,7 +22,9 @@ export const useUserContext = () => {
 export const UserProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(userReducer, initialState);
+  const [currentSocial, setCurrentSocial] = useState(null);
 
+  
   const signin = (token) => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
 
@@ -61,37 +63,10 @@ export const UserProvider = ({ children }) => {
   };
 
   const social = async(name, data) => {
-    let socialData = state.socialData;
-
-    if (name === "instagram") {
-      console.log("instagram data", data);
-
-      //set instagram data in user context
-
-      socialData = {
-        ...socialData,
-        instagram: data,
-        facebook: socialData?.facebook
-      };
-    }
-
-    if (name === "facebook") {
-      console.log("facebook data", data);
-
-      //set facebook data in user context
-
-      socialData = {
-        ...socialData,
-        facebook: data,
-        instagram: socialData?.instagram
-      };
-    }
-
-    setSocialData(socialData);
-    setUser({
-      ...state.user,
-      socialData: socialData,
-    });
+    setCurrentSocial({
+      ...currentSocial,
+      [name]: data,
+    })
   };
 
   const disconnectSocial = async (name) => {
@@ -136,6 +111,13 @@ export const UserProvider = ({ children }) => {
   const setSocialData = (socialData) => {
     dispatch({ type: "SET_SOCIAL_DATA", payload: socialData });
   };
+
+
+  useEffect(() => {
+    if (currentSocial) {
+      setSocialData(currentSocial);
+    }
+  }, [currentSocial]);
 
   useEffect(() => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
