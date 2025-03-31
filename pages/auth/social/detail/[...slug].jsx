@@ -3,13 +3,13 @@ import AppWrapper from "@/components/hoc/AppWrapper";
 import { useUserContext } from "@/contexts/UserContext";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import { BarChart, PieChart } from "@mui/x-charts";
+import { BarChart, LineChart, PieChart } from "@mui/x-charts";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
@@ -182,7 +182,7 @@ export default function SocialDetail() {
                 </Box>
 
                 <Box className="grid grid-cols-2 gap-4">
-                <Box className="col-span-2">
+                  <Box className="col-span-2">
                     <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
                       <Typography
                         className="col-span-3"
@@ -191,28 +191,37 @@ export default function SocialDetail() {
                           fontWeight: "bold",
                         }}
                       >
-                       ประเภทโพสต์
+                        ประเภทโพสต์
                       </Typography>
                     </Box>
 
-                    {user?.instagram?.insightsGender.data.length > 0 && (
+                    {user?.instagram?.insightsMediaType && (
                       <PieChart
                         series={[
                           {
-                            data:
-                              user?.instagram?.insightsGender &&
-                              user?.instagram?.insightsGender.data[0].total_value.breakdowns[0].results.map(
-                                (item, index) => ({
-                                  id: index + 1,
-                                  label:
-                                    item.dimension_values[0] == "F"
-                                      ? "Female"
-                                      : item.dimension_values[0] == "M"
-                                      ? "Male"
-                                      : "Other",
-                                  value: item.value,
-                                })
-                              ),
+                            data: user?.instagram?.insightsMediaType && [
+                              {
+                                id: 1,
+                                label: "Carousel",
+                                value:
+                                  user?.instagram?.insightsMediaType.carousel
+                                    .length,
+                              },
+                              {
+                                id: 2,
+                                label: "Image",
+                                value:
+                                  user?.instagram?.insightsMediaType.image
+                                    .length,
+                              },
+                              {
+                                id: 3,
+                                label: "Video",
+                                value:
+                                  user?.instagram?.insightsMediaType.video
+                                    .length,
+                              },
+                            ],
                           },
                         ]}
                         width={600}
@@ -220,7 +229,35 @@ export default function SocialDetail() {
                       />
                     )}
                   </Box>
-                  
+                  <Box className="col-span-2">
+                    <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
+                      <Typography
+                        className="col-span-3"
+                        sx={{
+                          fontSize: "1.25rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                       {'สถิติยอดไลค์ (ใหม่ - เก่า)'}
+                      </Typography>
+                    </Box>
+
+                    {user?.instagram?.media.data.length > 0 && (
+                     <LineChart
+                    //  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                     series={[
+                       {
+                         data: user?.instagram?.media.data.map((item) => (
+                            item.like_count
+                          )),
+                       },
+                     ]}
+                     width={1080}
+                     height={300}
+                   />
+                    )}
+                  </Box>
+
                   <Box>
                     <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
                       <Typography
@@ -395,7 +432,7 @@ export default function SocialDetail() {
                <CardInfo title="Media" value={data.me.media_count} />
              </Box> */}
 
-<Box className="grid grid-cols-3 gap-4">
+                <Box className="grid grid-cols-3 gap-4">
                   <CardInfo
                     title="Followers"
                     value={user?.facebook?.page.followers_count}
@@ -441,7 +478,6 @@ export default function SocialDetail() {
                         <Box className="flex flex-row  gap-5 w-full p-3">
                           <small>
                             <ThumbUpIcon
-
                               sx={{
                                 fontSize: 24,
                                 color: "red",
