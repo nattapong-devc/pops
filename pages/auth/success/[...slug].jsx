@@ -51,10 +51,11 @@ const Success = () => {
     if (code) {
       console.log(code);
       console.log(router.query.slug);
-      if (router.query.slug[0] === "facebook") {
+      let slug = router.query.slug[0];
+      if (slug === "facebook") {
         console.log(router.query.slug);
         handleFindFacebookData(code);
-      } else if (router.query.slug === "instagram") {
+      } else if (slug === "instagram") {
         handleFindInstagramData(code);
       }
     }
