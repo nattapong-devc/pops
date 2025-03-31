@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 export default function SocialMedia() {
-  const { social, disconnectSocial, user, socialData } = useUserContext();
+  const { social, disconnectSocial, user } = useUserContext();
   const router = useRouter();
 
   const FACEBOOK_CLIENT_ID = "2235829596835938";
@@ -55,14 +55,14 @@ export default function SocialMedia() {
       name: "Facebook",
       icon: <FacebookIcon />,
       loginUrl: facebookLoginUrl,
-      status: socialData?.facebook ? socialData?.facebook : null,
+      status: user?.facebook ? user?.facebook : null,
     },
     {
       id: 2,
       name: "Instagram",
       icon: <InstagramIcon />,
       loginUrl: instagramLoginUrl,
-      status: socialData?.instagram ? socialData?.instagram : null,
+      status: user?.instagram ? user?.instagram : null,
     },
   ]);
 
