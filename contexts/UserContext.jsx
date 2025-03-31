@@ -116,6 +116,8 @@ export const UserProvider = ({ children }) => {
     }
 
     setUser(user);
+
+    getUserData();
   };
 
   const functionContainer = {
@@ -140,6 +142,10 @@ export const UserProvider = ({ children }) => {
       setUser(null);
     }
   }, []);
+
+ 
+
+    
 
   return (
     <UserContext.Provider value={{ ...state, ...functionContainer }}>
