@@ -7,6 +7,8 @@ import { BarChart, PieChart } from "@mui/x-charts";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
@@ -150,6 +152,29 @@ export default function SocialDetail() {
                         <Box className="h-36 overflow-y-auto px-3">
                           <Typography sx={{}}>{item.caption}</Typography>
                         </Box>
+
+                        <Box className="flex flex-col gap-2">
+                          <small>
+                            <FavoriteIcon
+                              sx={{
+                                fontSize: 15,
+                                color: "red",
+                                marginRight: "4px",
+                              }}
+                            />
+                            {item.media_type}
+                          </small>
+                          <small>
+                            <CommentIcon
+                              sx={{
+                                fontSize: 15,
+                                color: "blue",
+                                marginRight: "4px",
+                              }}
+                            />
+                            {item.comments_count}
+                          </small>
+                        </Box>
                       </Box>
                     ))}
                   </Box>
@@ -169,32 +194,33 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-{user?.instagram?.insightsAge.data.length > 0 &&  (       <BarChart
-                      xAxis={[
-                        {
-                          scaleType: "band",
-                          data:
-                            user?.instagram?.insightsAge &&
-                            user?.instagram?.insightsAge.data[0].total_value.breakdowns[0].results.map(
-                              (item) => item.dimension_values[0]
-                            ),
-                        },
-                      ]}
-                      series={[
-                        {
-                          data:
-                            user?.instagram?.insightsAge &&
-                            user?.instagram?.insightsAge.data[0].total_value.breakdowns[0].results.map(
-                              (item) => item.value
-                            ),
+                    {user?.instagram?.insightsAge.data.length > 0 && (
+                      <BarChart
+                        xAxis={[
+                          {
+                            scaleType: "band",
+                            data:
+                              user?.instagram?.insightsAge &&
+                              user?.instagram?.insightsAge.data[0].total_value.breakdowns[0].results.map(
+                                (item) => item.dimension_values[0]
+                              ),
+                          },
+                        ]}
+                        series={[
+                          {
+                            data:
+                              user?.instagram?.insightsAge &&
+                              user?.instagram?.insightsAge.data[0].total_value.breakdowns[0].results.map(
+                                (item) => item.value
+                              ),
 
-                          type: "bar",
-                        },
-                      ]}
-                      width={600}
-                      height={300}
-                    />)}
-             
+                            type: "bar",
+                          },
+                        ]}
+                        width={600}
+                        height={300}
+                      />
+                    )}
                   </Box>
 
                   <Box>
@@ -210,30 +236,30 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-                    {user?.instagram?.insightsGender.data.length > 0 &&  (      <PieChart
-                      series={[
-                        {
-                          data:
-                            user?.instagram?.insightsGender &&
-                            user?.instagram?.insightsGender.data[0].total_value.breakdowns[0].results.map(
-                              (item, index) => ({
-                                id: index + 1,
-                                label:
-                                  item.dimension_values[0] == "F"
-                                    ? "Female"
-                                    : item.dimension_values[0] == "M"
-                                    ? "Male"
-                                    : "Other",
-                                value: item.value,
-                              })
-                            ),
-                        },
-                      ]}
-                      width={600}
-                      height={250}
-                    />)}
-
-              
+                    {user?.instagram?.insightsGender.data.length > 0 && (
+                      <PieChart
+                        series={[
+                          {
+                            data:
+                              user?.instagram?.insightsGender &&
+                              user?.instagram?.insightsGender.data[0].total_value.breakdowns[0].results.map(
+                                (item, index) => ({
+                                  id: index + 1,
+                                  label:
+                                    item.dimension_values[0] == "F"
+                                      ? "Female"
+                                      : item.dimension_values[0] == "M"
+                                      ? "Male"
+                                      : "Other",
+                                  value: item.value,
+                                })
+                              ),
+                          },
+                        ]}
+                        width={600}
+                        height={250}
+                      />
+                    )}
                   </Box>
                 </Box>
 
@@ -250,34 +276,34 @@ export default function SocialDetail() {
                     </Typography>
                   </Box>
 
-                  {user?.instagram?.insightsCity.data.length > 0 && (  <BarChart
-                    layout="horizontal"
-                    yAxis={[
-                      {
-                        scaleType: "band",
-                        data:
-                          user?.instagram?.insightsCity &&
-                          user?.instagram?.insightsCity.data[0].total_value.breakdowns[0].results.map(
-                            (item) => item.dimension_values[0]
-                          ),
-                      },
-                    ]}
-                    series={[
-                      {
-                        data:
-                          user?.instagram?.insightsCity &&
-                          user?.instagram?.insightsCity.data[0].total_value.breakdowns[0].results.map(
-                            (item) => item.value
-                          ),
-                        type: "bar",
-                      },
-                    ]}
-                    width={900}
-                    height={1080}
-                    grid={{ vertical: true, horizontal: true }}
-                  />)}
-
-                
+                  {user?.instagram?.insightsCity.data.length > 0 && (
+                    <BarChart
+                      layout="horizontal"
+                      yAxis={[
+                        {
+                          scaleType: "band",
+                          data:
+                            user?.instagram?.insightsCity &&
+                            user?.instagram?.insightsCity.data[0].total_value.breakdowns[0].results.map(
+                              (item) => item.dimension_values[0]
+                            ),
+                        },
+                      ]}
+                      series={[
+                        {
+                          data:
+                            user?.instagram?.insightsCity &&
+                            user?.instagram?.insightsCity.data[0].total_value.breakdowns[0].results.map(
+                              (item) => item.value
+                            ),
+                          type: "bar",
+                        },
+                      ]}
+                      width={900}
+                      height={1080}
+                      grid={{ vertical: true, horizontal: true }}
+                    />
+                  )}
                 </Box>
               </Box>
             </Container>
