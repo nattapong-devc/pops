@@ -10,13 +10,13 @@ const Success = () => {
   const { code } = router.query;
   const [codeKey, setCodeKey] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { social } = useUserContext();
+  const { social,user } = useUserContext();
 
   const handleFindFacebookData = async (code) => {
     try {
       const res = await axios.post("/api/facebook", { code });
       if (res.data.status === "success") {
-        social("facebook", res.data.data);
+        social("facebook", res.data.data,user);
         setCodeKey(res.data.status);
         setLoading(false);
 
@@ -34,7 +34,7 @@ const Success = () => {
       const res = await axios.post("/api/instagram", { code });
       if (res.data.status === "success") {
         console.log(res.data);
-        social("instagram", res.data.data);
+        social("instagram", res.data.data,user);
         setCodeKey(res.data.status);
         setLoading(false);
 
@@ -48,7 +48,7 @@ const Success = () => {
   };
 
   useEffect(() => {
-    if (code) {
+    if (code && user) {
       console.log(code);
       console.log(router.query.slug);
       let slug = router.query.slug[0];
@@ -59,7 +59,7 @@ const Success = () => {
         handleFindInstagramData(code);
       }
     }
-  }, [code, router.query.slug]);
+  }, [code, router.query.slug,user]);
 
   return (
     <Container

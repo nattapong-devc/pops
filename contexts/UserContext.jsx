@@ -8,7 +8,7 @@ const initialState = {
   signin: (token) => {},
   signOut: () => {},
   getUserData: () => {},
-  social: (name, data) => {},
+  social: (name, data, user) => {},
   disconnectSocial: (name) => {},
 };
 
@@ -59,35 +59,11 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const social = (name, data) => {
-    let user = state.user;
-
-    if (name === "instagram") {
-      console.log("connect instagram");
-
-      //set instagram data in user context
-
-      user = {
-        ...user,
-        instagram: data,
-        facebook: user.facebook ? user.facebook : null,
-      };
-    }
-
-    if (name === "facebook") {
-      console.log("connect facebook");
-
-      //set facebook data in user context
-
-      user = {
-        ...user,
-        facebook: data,
-        instagram: user.instagram ? user.instagram : null,
-      };
-    }
-
-    console.log("user", user);
-    setUser(user);
+  const social = (name, data, user) => {
+    setUser({
+      ...user,
+      [name]: data,
+    });
   };
 
   const disconnectSocial = async (name) => {
