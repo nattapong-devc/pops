@@ -97,7 +97,7 @@ const Success = () => {
                   fontWeight={"bold"}
                   textAlign={"center"}
                 >
-                  Successfully connected
+                  Something went wrong
                 </Typography>
               </Box>
             </>
