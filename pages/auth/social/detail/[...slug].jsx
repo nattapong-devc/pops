@@ -356,6 +356,17 @@ export default function SocialDetail() {
                <CardInfo title="Media" value={data.me.media_count} />
              </Box> */}
 
+<Box className="grid grid-cols-3 gap-4">
+                  <CardInfo
+                    title="Followers"
+                    value={user?.facebook?.page.followers_count}
+                  />
+                  <CardInfo
+                    title="Fan"
+                    value={user?.facebook?.page.fan_count}
+                  />
+                </Box>
+
                 <Box>
                   <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
                     <Typography
