@@ -59,16 +59,15 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const social = async (name, data) => {
-    setUser({
-      ...state.user,
-      [name]: data,
-    });
-    console.log("social data", data);
-    console.log("social name", name);
-    console.log("social user", state.user);
-    console.log("social state", state);
+  const social = (name, data) => {
+    let user = state.user;
 
+    user = {
+      ...user,
+      [name]: data,
+    };
+
+    setUser(user);
   };
 
   const disconnectSocial = async (name) => {
@@ -97,7 +96,7 @@ export const UserProvider = ({ children }) => {
     }
 
     setUser(user);
-  }
+  };
 
   const functionContainer = {
     signin,
