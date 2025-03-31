@@ -61,14 +61,35 @@ export const UserProvider = ({ children }) => {
   };
 
   const social = (name, data) => {
-    setSocialData({
-      ...state.socialData,
-      [name]: data,
+    let socialData = state.socialData;
+
+    if (name === "instagram") {
+      console.log("instagram data", data);
+
+      //set instagram data in user context
+
+      socialData = {
+        ...socialData,
+        instagram: data,
+      };
+    }
+
+    if (name === "facebook") {
+      console.log("facebook data", data);
+
+      //set facebook data in user context
+
+      socialData = {
+        ...socialData,
+        facebook: data,
+      };
+    }
+
+    setSocialData(socialData);
+    setUser({
+      ...state.user,
+      socialData: socialData,
     });
-    console.log("social data", state.socialData);
-    console.log("social name", name);
-    console.log("social data", data);
-    console.log("state", state);
   };
 
   const disconnectSocial = async (name) => {
