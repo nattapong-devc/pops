@@ -17,6 +17,7 @@ import { LOGO } from "@/assets";
 import { useUserContext } from "@/contexts/UserContext";
 import httpRequest from "@/utils/httpRequest";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Swal from "sweetalert2";
 
 
 export default function SignIn() {
@@ -82,11 +83,26 @@ export default function SignIn() {
     e.preventDefault();
     if (!validate()) {
       if (user.username == "test_user" && user.password == "test_password") {
+        Swal.fire({
+          title: "Success!",
+          text: "You have successfully logged in.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
         signin("ztLTYk03Vho3dXrDoW2XZFIUIKzXwYP5");
+
+
+       
         
         setOpen(false);
       } else {
-        alert("Invalid username or password");
+        Swal.fire({
+          title: "Error!",
+          text: "Invalid username or password.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        
       }
     }
   };
