@@ -40,243 +40,138 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
+          "instagram_business_basic,instagram_business_manage_insight",
           // "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };
 
-  const handleFindFacebookData = async (code) => {
-    try {
-      const res = await axios.post("/api/facebook", { code });
-      if (res.data.status === "success") {
-        social("facebook", res.data.data);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  let facebookLoginUrl = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
+  let instagramLoginUrl = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
 
-  const handleFindInstagramData = async (code) => {
-    try {
-      const res = await axios.post("/api/instagram", { code });
-      if (res.data.status === "success") {
-        console.log(res.data);
-        social("instagram", res.data.data);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
-  const initializedFacebook = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
+const [socialData, setSocialData] = React.useState([
+  {
+    id: 1,
+    name: "Facebook",
+    icon: <FacebookIcon />,
+    loginUrl: facebookLoginUrl,
+    status: user.facebook,
+  },
+  {
+    id: 2,
+    name: "Instagram",
+    icon: <InstagramIcon />,
+    loginUrl: instagramLoginUrl,
+    status: user.instagram,
+  },
+]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
 
-      if (oauth_code_facebook && !initializedFacebook.current) {
-        initializedFacebook.current = true;
-        handleFindFacebookData(oauth_code_facebook);
 
-        // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
-        localStorage.removeItem("oauth_code_facebook");
-      }
-    }, 1000);
+  // const handleFindFacebookData = async (code) => {
+  //   try {
+  //     const res = await axios.post("/api/facebook", { code });
+  //     if (res.data.status === "success") {
+  //       social("facebook", res.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
 
-    return () => {
-      clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
-    };
-  }, []);
+  // const handleFindInstagramData = async (code) => {
+  //   try {
+  //     const res = await axios.post("/api/instagram", { code });
+  //     if (res.data.status === "success") {
+  //       console.log(res.data);
+  //       social("instagram", res.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
 
-  const initializedInstagram = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
+  // const initializedFacebook = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const oauth_code_instagram = localStorage.getItem("oauth_code_instagram");
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
 
-      if (oauth_code_instagram && !initializedInstagram.current) {
-        initializedInstagram.current = true;
-        handleFindInstagramData(oauth_code_instagram);
+  //     if (oauth_code_facebook && !initializedFacebook.current) {
+  //       initializedFacebook.current = true;
+  //       handleFindFacebookData(oauth_code_facebook);
 
-        // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
-        localStorage.removeItem("oauth_code_instagram");
-      }
-    }, 1000);
+  //       // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
+  //       localStorage.removeItem("oauth_code_facebook");
+  //     }
+  //   }, 1000);
 
-    return () => {
-      clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // const initializedInstagram = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const oauth_code_instagram = localStorage.getItem("oauth_code_instagram");
+
+  //     if (oauth_code_instagram && !initializedInstagram.current) {
+  //       initializedInstagram.current = true;
+  //       handleFindInstagramData(oauth_code_instagram);
+
+  //       // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
+  //       localStorage.removeItem("oauth_code_instagram");
+  //     }
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
-        <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
-          <Typography>
-            <FacebookIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: "1rem",
-              }}
-            />
-            Facebook
-          </Typography>
-
-          {user.facebook ? (
-            <>
-              {" "}
-              <Box className="flex flex-row gap-5">
-                {/* <Button
-              size="small"
-              sx={{
-                borderRadius: "8px",
-                backgroundColor: "#FF0000",
-                color: "white",
-                px: 2,
-                "&:hover": {
-                  backgroundColor: "#FF0000",
-                },
-              }}
-            >
-              Disconnect
-            </Button> */}
-                <Button
-                  size="small"
-                  sx={{
-                    borderRadius: "8px",
-                    backgroundColor: "#FF7A00",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "#FF7A00",
-                    },
-                  }}
-                  onClick={() => {
-                    router.push("/auth/social/detail/facebook");
-                  }}
-                >
-                  information
-                </Button>
-              </Box>
-            </>
-          ) : (
-            <>
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#1877F2",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#1877F2",
-                  },
-                }}
-                onClick={() => {
-                  //open new window
-                  const width = 800;
-                  const height = 800;
-                  const left = window.innerWidth / 2 - width / 2;
-                  const top = window.innerHeight / 2 - height / 2;
-
-                  const url = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
-
-                  window.open(
-                    url,
-                    "Facebook",
-                    `width=${width},height=${height},left=${left},top=${top}`
-                  );
-                }}
-              >
-                Connect
-              </Button>
-            </>
-          )}
-        </Box>
-        <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
-          <Typography>
-            <InstagramIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: "1rem",
-              }}
-            />
-            Instagram
-          </Typography>
-          {user.instagram ? (
+        {/* <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
+     
+        </Box> */}
+        {          socialData.map((item) => (
+          <Box
+            key={item.id}
+            className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center"
+          >
             <Box className="flex flex-row gap-5">
-              {/* <Button
-                size="small"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#FF0000",
-                  color: "white",
-                  px: 2,
-                  "&:hover": {
-                    backgroundColor: "#FF0000",
-                  },
-                }}
-              >
-                Disconnect
-              </Button> */}
-              <Button
-                size="small"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#FF7A00",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#FF7A00",
-                  },
-                }}
-                onClick={() => {
-                  router.push("/auth/social/detail/instagram");
-                }}
-              >
-                information
-              </Button>
+              {item.icon}
+              <Typography>{item.name}</Typography>
             </Box>
-          ) : (
-            <>
+            {item.status ? (
               <Button
-                size="small"
                 variant="contained"
-                color="primary"
-                sx={{
-                  borderRadius: "8px",
-                  background:
-                    "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
-                  color: "white",
-                  "&:hover": {
-                    background:
-                      "linear-gradient(to right, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)",
-                  },
-                }}
-                onClick={() => {
-                  //open new window
-                  const width = 800;
-                  const height = 800;
-                  const left = window.innerWidth / 2 - width / 2;
-                  const top = window.innerHeight / 2 - height / 2;
-
-                  const url = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
-                  window.open(
-                    url,
-                    "Instagram",
-                    `width=${width},height=${height},left=${left},top=${top}`
-                  );
-                }}
+                color="success"
+                size="small"
+                onClick={() => router.push(item.loginUrl)}
+              >
+                Connected
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => router.push(item.loginUrl)}
               >
                 Connect
               </Button>
-            </>
-          )}
-        </Box>
+            )}
+          </Box>
+        ))}
+ 
       </Container>
     </Box>
   );

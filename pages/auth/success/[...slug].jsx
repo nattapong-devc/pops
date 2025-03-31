@@ -1,26 +1,61 @@
 import { Box, CircularProgress, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
+import { useUserContext } from "@/contexts/UserContext";
 const Success = () => {
   const router = useRouter();
   const { code } = router.query;
   const [codeKey, setCodeKey] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { social } = useUserContext();
+
+  const handleFindFacebookData = async (code) => {
+    try {
+      const res = await axios.post("/api/facebook", { code });
+      if (res.data.status === "success") {
+        social("facebook", res.data.data);
+        setCodeKey(res.data.status);
+        setLoading(false);
+
+        setTimeout(() => {
+          router.push("/auth/profile?state=social");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFindInstagramData = async (code) => {
+    try {
+      const res = await axios.post("/api/instagram", { code });
+      if (res.data.status === "success") {
+        console.log(res.data);
+        social("instagram", res.data.data);
+        setCodeKey(res.data.status);
+        setLoading(false);
+
+        setTimeout(() => {
+          router.push("/auth/profile?state=social");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   useEffect(() => {
-    if (code && router.query.slug) {
-      localStorage.setItem(`oauth_code_${router.query.slug}`, code);
-      setCodeKey(code);
-
-      setTimeout(() => {
-        window.close();
-      }, 3000);
+    if (code) {
+      if (router.query.slug === "facebook") {
+        handleFindFacebookData(code);
+      } else if (router.query.slug === "instagram") {
+        handleFindInstagramData(code);
+      }
     }
-
-    setLoading(false);
   }, [code, router.query.slug]);
+
   return (
     <Container
       maxWidth="sm"
