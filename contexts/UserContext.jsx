@@ -1,16 +1,14 @@
 "use client";
 import { PROFILE } from "@/assets";
 import { useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const initialState = {
   user: null,
-  socialData: null,
   signin: (token) => {},
   signOut: () => {},
   getUserData: () => {},
   social: (name, data) => {},
-  disconnectSocial: (name) => {},
 };
 
 export const UserContext = createContext(initialState);
@@ -22,7 +20,6 @@ export const useUserContext = () => {
 export const UserProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(userReducer, initialState);
-  const [currentSocial, setCurrentSocial] = useState(null);
 
   const signin = (token) => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
@@ -44,6 +41,15 @@ export const UserProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
+    // // get user data
+    // const res = await httpRequest("get", "/v2/kol/profiles");
+
+    // console.log(res);
+
+    // if (res.status == "error") return;
+
+    // setUser(res.data);
+
     setUser({
       username: "test_user",
       firstName: "Test",
@@ -53,34 +59,31 @@ export const UserProvider = ({ children }) => {
   };
 
   const social = async (name, data) => {
-    setCurrentSocial({
-      ...currentSocial,
-      [name]: data,
-    });
-  };
-
-  const disconnectSocial = async (name) => {
     let user = state.user;
 
     if (name === "instagram") {
-      console.log("disconnect instagram");
+      console.log(data);
+
+      console.log("set instagram data");
 
       //set instagram data in user context
 
       user = {
         ...user,
-        instagram: null,
+        instagram: data,
       };
     }
 
     if (name === "facebook") {
-      console.log("disconnect facebook");
+      console.log(data);
+
+      console.log("set facebook data");
 
       //set facebook data in user context
 
       user = {
         ...user,
-        facebook: null,
+        facebook: data,
       };
     }
 
@@ -92,21 +95,10 @@ export const UserProvider = ({ children }) => {
     signOut,
     getUserData,
     social,
-    disconnectSocial,
   };
   const setUser = (user) => {
     dispatch({ type: "SET_USER", payload: user });
   };
-
-  const setSocialData = (socialData) => {
-    dispatch({ type: "SET_SOCIAL_DATA", payload: socialData });
-  };
-
-  useEffect(() => {
-    if (currentSocial) {
-      setSocialData(currentSocial);
-    }
-  }, [currentSocial]);
 
   useEffect(() => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
@@ -133,11 +125,6 @@ const userReducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
-      };
-    case "SET_SOCIAL_DATA":
-      return {
-        ...state,
-        socialData: action.payload,
       };
     default:
       return state;
