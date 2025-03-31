@@ -21,8 +21,7 @@ export const useUserContext = () => {
 export const UserProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(userReducer, initialState);
-  let instagram = localStorage.getItem("instagram");
-  let facebook = localStorage.getItem("facebook");
+
   const signin = (token) => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
 
@@ -45,6 +44,8 @@ export const UserProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
+    let instagram = localStorage.getItem("instagram");
+    let facebook = localStorage.getItem("facebook");
     setUser({
       username: "test_user",
       firstName: "Test",
@@ -57,7 +58,8 @@ export const UserProvider = ({ children }) => {
 
   const social = async (name, data) => {
     let user = state.user;
-
+    let instagram = localStorage.getItem("instagram");
+    let facebook = localStorage.getItem("facebook");
     if (name === "instagram") {
       console.log(data);
 
