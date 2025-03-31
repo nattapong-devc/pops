@@ -153,7 +153,7 @@ export default function SocialDetail() {
                           <Typography sx={{}}>{item.caption}</Typography>
                         </Box>
 
-                        <Box className="flex flex-col gap-2 w-full p-3">
+                        <Box className="flex flex-row  gap-5 w-full p-3">
                           <small>
                             <FavoriteIcon
                               sx={{
