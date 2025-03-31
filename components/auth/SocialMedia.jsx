@@ -104,6 +104,7 @@ export default function SocialMedia() {
                       confirmButtonText: "Yes, disconnect it!",
                     }).then((result) => {
                       if (result.isConfirmed) {
+                        disconnectSocial(item.name.toLowerCase());
                         Swal.fire({
                           title: "Disconnected!",
                           text: `${item.name} has been disconnected.`,
