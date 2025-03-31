@@ -66,8 +66,9 @@ export const UserProvider = ({ children }) => {
     });
     console.log("social data", data);
     console.log("social name", name);
+    console.log("social user", state.user);
+    console.log("social state", state);
 
-    
   };
 
   const disconnectSocial = async (name) => {
