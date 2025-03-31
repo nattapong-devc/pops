@@ -9,6 +9,7 @@ const initialState = {
   signOut: () => {},
   getUserData: () => {},
   social: (name, data) => {},
+  disconnectSocial: (name) => {},
 };
 
 export const UserContext = createContext(initialState);
@@ -20,7 +21,8 @@ export const useUserContext = () => {
 export const UserProvider = ({ children }) => {
   const router = useRouter();
   const [state, dispatch] = useReducer(userReducer, initialState);
-
+  let instagram = localStorage.getItem("instagram");
+  let facebook = localStorage.getItem("facebook");
   const signin = (token) => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
 
@@ -35,26 +37,21 @@ export const UserProvider = ({ children }) => {
 
     if (key) {
       localStorage.removeItem(key);
+      localStorage.removeItem("instagram");
+      localStorage.removeItem("facebook");
       setUser(null);
       router.push("/");
     }
   };
 
   const getUserData = async () => {
-    // // get user data
-    // const res = await httpRequest("get", "/v2/kol/profiles");
-
-    // console.log(res);
-
-    // if (res.status == "error") return;
-
-    // setUser(res.data);
-
     setUser({
       username: "test_user",
       firstName: "Test",
       lastName: "User",
       profile: PROFILE.src,
+      facebook: facebook ? JSON.parse(facebook) : null,
+      instagram: instagram ? JSON.parse(instagram) : null,
     });
   };
 
@@ -65,12 +62,14 @@ export const UserProvider = ({ children }) => {
       console.log(data);
 
       console.log("set instagram data");
+      //setLocalStorage("instagram", data);
 
-      //set instagram data in user context
+      localStorage.setItem("instagram", JSON.stringify(data));
 
       user = {
         ...user,
         instagram: data,
+        facebook: facebook ? JSON.parse(facebook) : null,
       };
     }
 
@@ -84,6 +83,31 @@ export const UserProvider = ({ children }) => {
       user = {
         ...user,
         facebook: data,
+        instagram: instagram ? JSON.parse(instagram) : null,
+      };
+    }
+
+    setUser(user);
+  };
+
+  const disconnectSocial = (name) => {
+    let user = state.user;
+
+    if (name === "instagram") {
+      console.log("remove instagram data");
+      localStorage.removeItem("instagram");
+      user = {
+        ...user,
+        instagram: null,
+      };
+    }
+
+    if (name === "facebook") {
+      console.log("remove facebook data");
+      localStorage.removeItem("facebook");
+      user = {
+        ...user,
+        facebook: null,
       };
     }
 
@@ -95,6 +119,7 @@ export const UserProvider = ({ children }) => {
     signOut,
     getUserData,
     social,
+    disconnectSocial,
   };
   const setUser = (user) => {
     dispatch({ type: "SET_USER", payload: user });
