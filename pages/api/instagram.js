@@ -46,8 +46,17 @@ export default async function handler(req, res) {
         }
       );
 
-
-
+      const insightsMediaType = {
+        image: response_media.data.data.filter(
+          (media) => media.media_type === "IMAGE"
+        ),
+        video: response_media.data.data.filter(
+          (media) => media.media_type === "VIDEO"
+        ),
+        carousel: response_media.data.data.filter(
+          (media) => media.media_type === "CAROUSEL_ALBUM"
+        ),
+      };
 
       const insightsAgeRes = await axios.get(
         `https://graph.instagram.com/${response_me.data.id}/insights`,
@@ -101,6 +110,7 @@ export default async function handler(req, res) {
           insightsAge: insightsAgeRes ? insightsAgeRes.data : null,
           insightsCity: insightsCityRes ? insightsCityRes.data : null,
           insightsGender: insightsGender ? insightsGender.data : null,
+          insightsMediaType: insightsMediaType,
         },
       });
     } catch (error) {

@@ -182,6 +182,45 @@ export default function SocialDetail() {
                 </Box>
 
                 <Box className="grid grid-cols-2 gap-4">
+                <Box className="col-span-2">
+                    <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
+                      <Typography
+                        className="col-span-3"
+                        sx={{
+                          fontSize: "1.25rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                       ประเภทโพสต์
+                      </Typography>
+                    </Box>
+
+                    {user?.instagram?.insightsGender.data.length > 0 && (
+                      <PieChart
+                        series={[
+                          {
+                            data:
+                              user?.instagram?.insightsGender &&
+                              user?.instagram?.insightsGender.data[0].total_value.breakdowns[0].results.map(
+                                (item, index) => ({
+                                  id: index + 1,
+                                  label:
+                                    item.dimension_values[0] == "F"
+                                      ? "Female"
+                                      : item.dimension_values[0] == "M"
+                                      ? "Male"
+                                      : "Other",
+                                  value: item.value,
+                                })
+                              ),
+                          },
+                        ]}
+                        width={600}
+                        height={250}
+                      />
+                    )}
+                  </Box>
+                  
                   <Box>
                     <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
                       <Typography
