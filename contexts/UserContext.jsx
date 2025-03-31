@@ -79,6 +79,8 @@ export const UserProvider = ({ children }) => {
       console.log(data);
 
       console.log("set facebook data");
+      //setLocalStorage("facebook", data);
+      localStorage.setItem("facebook", JSON.stringify(data));
 
       //set facebook data in user context
 
