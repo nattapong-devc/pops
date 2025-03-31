@@ -21,7 +21,8 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
+          "pages_read_user_content,pages_read_engagement,read_insights",
+          // "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
       },
     },
   };
@@ -39,7 +40,8 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
+          "instagram_business_basic,instagram_business_content_publish",
+          // "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };
