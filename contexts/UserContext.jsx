@@ -1,7 +1,7 @@
 "use client";
 import { PROFILE } from "@/assets";
 import { useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 
 const initialState = {
   user: null,
