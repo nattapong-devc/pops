@@ -70,13 +70,19 @@ const Success = () => {
       }}
     >
       {loading ? (
-        <Box className="flex flex-col items-center gap-5 w-full justify-center">
+        <Box className="flex flex-col items-center gap-5 w-full justify-center h-full">
           <CircularProgress
             sx={{
-              fontSize: 150,
+              fontSize: 300,
             }}
           />
-          <Typography>Loading...</Typography>
+          <Typography
+          sx={{
+            fontSize: 24,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+          >Loading...</Typography>
         </Box>
       ) : (
         <>

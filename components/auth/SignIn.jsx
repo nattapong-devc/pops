@@ -19,7 +19,6 @@ import httpRequest from "@/utils/httpRequest";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Swal from "sweetalert2";
 
-
 export default function SignIn() {
   const { signin } = useUserContext();
 
@@ -40,10 +39,9 @@ export default function SignIn() {
 
   const [open, setOpen] = useState(false);
 
-
   const handlePasswordShow = () => {
     setPasswordShow(!passwordShow);
-    };
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,9 +89,6 @@ export default function SignIn() {
         });
         signin("ztLTYk03Vho3dXrDoW2XZFIUIKzXwYP5");
 
-
-       
-        
         setOpen(false);
       } else {
         Swal.fire({
@@ -102,7 +97,6 @@ export default function SignIn() {
           icon: "error",
           confirmButtonText: "OK",
         });
-        
       }
     }
   };
@@ -194,20 +188,20 @@ export default function SignIn() {
                   },
                 }}
                 slotProps={{
-                    input: {
-                        endAdornment: (
-                            <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handlePasswordShow}
-                                edge="end"
-                            >
-                                {passwordShow ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                            </InputAdornment>
-                        ),
-                    },
-                  }}
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handlePasswordShow}
+                          edge="end"
+                        >
+                          {passwordShow ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
                 error={userError.password.length > 0}
                 helperText={userError.password}
               />
