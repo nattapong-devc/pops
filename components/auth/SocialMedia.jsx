@@ -41,7 +41,7 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "instagram_business_basic,instagram_business_manage_insight,instagram_business_manage_insights",
+          "instagram_business_basic,instagram_business_manage_insight,instagram_business_content_publish",
         // "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
@@ -119,7 +119,7 @@ export default function SocialMedia() {
                 <Button
                   variant="outlined"
                   size="small"
-                  onClick={() => router.push(`/auth/social/detail/${item.name}`)}
+                  onClick={() => router.push(`/auth/social/detail/${item.name.toLowerCase()}`)}
                   endIcon={<NavigateNextIcon />}
                   sx={{
                     marginLeft: 1,
