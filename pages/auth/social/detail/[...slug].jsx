@@ -169,7 +169,7 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-{user?.instagram?.insightsAge && (       <BarChart
+{user?.instagram?.insightsAge.data.length > 0 &&  (       <BarChart
                       xAxis={[
                         {
                           scaleType: "band",
@@ -210,7 +210,7 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-                    {user?.instagram?.insightsGender && (      <PieChart
+                    {user?.instagram?.insightsGender.data.length > 0 &&  (      <PieChart
                       series={[
                         {
                           data:
@@ -250,7 +250,7 @@ export default function SocialDetail() {
                     </Typography>
                   </Box>
 
-                  {user?.instagram?.insightsCity && (  <BarChart
+                  {user?.instagram?.insightsCity.data.length > 0 && (  <BarChart
                     layout="horizontal"
                     yAxis={[
                       {
