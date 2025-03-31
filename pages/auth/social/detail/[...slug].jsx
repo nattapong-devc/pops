@@ -169,7 +169,7 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-                    <BarChart
+{user?.instagram?.insightsAge && (       <BarChart
                       xAxis={[
                         {
                           scaleType: "band",
@@ -193,7 +193,8 @@ export default function SocialDetail() {
                       ]}
                       width={600}
                       height={300}
-                    />
+                    />)}
+             
                   </Box>
 
                   <Box>
@@ -209,7 +210,7 @@ export default function SocialDetail() {
                       </Typography>
                     </Box>
 
-                    <PieChart
+                    {user?.instagram?.insightsGender && (      <PieChart
                       series={[
                         {
                           data:
@@ -230,7 +231,9 @@ export default function SocialDetail() {
                       ]}
                       width={600}
                       height={250}
-                    />
+                    />)}
+
+              
                   </Box>
                 </Box>
 
@@ -247,7 +250,7 @@ export default function SocialDetail() {
                     </Typography>
                   </Box>
 
-                  <BarChart
+                  {user?.instagram?.insightsCity && (  <BarChart
                     layout="horizontal"
                     yAxis={[
                       {
@@ -272,7 +275,9 @@ export default function SocialDetail() {
                     width={900}
                     height={1080}
                     grid={{ vertical: true, horizontal: true }}
-                  />
+                  />)}
+
+                
                 </Box>
               </Box>
             </Container>
@@ -283,7 +288,7 @@ export default function SocialDetail() {
               <Box className="flex flex-col gap-4 w-full ">
                 <Box className="flex flex-row gap-4 shadow-lg p-4 rounded-xl items-center">
                   <Avatar
-                    src={user?.facebook?.page.picture.data.url}
+                    src={user?.facebook?.page?.picture?.data?.url}
                     sx={{ width: 100, height: 100 }}
                     className="shadow-lg"
                   />
@@ -303,7 +308,7 @@ export default function SocialDetail() {
                         fontWeight: "bold",
                       }}
                     >
-                      {user?.facebook?.page.name}
+                      {user?.facebook?.page?.name}
                     </Typography>
 
                     <Box>
