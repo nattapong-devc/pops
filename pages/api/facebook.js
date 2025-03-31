@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         {
           params: {
             access_token: access_token,
-            fields: "id,name,access_token,picture,category_list,cover_photo",
+            fields: "id,name,access_token,picture,category_list,cover_photo,followers_count,fan_count",
             
           },
         }

@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
@@ -386,6 +387,31 @@ export default function SocialDetail() {
 
                         <Box className="h-36 overflow-y-auto px-3">
                           <Typography>{item.message}</Typography>
+                        </Box>
+                        <Box className="flex flex-row  gap-5 w-full p-3">
+                          <small>
+                            <ThumbUpIcon
+
+                              sx={{
+                                fontSize: 24,
+                                color: "red",
+                                marginRight: "4px",
+                              }}
+                            />
+                            {item?.likes?.summary?.total_count || 0}
+                          </small>
+
+                          <small>
+                            <CommentIcon
+                              sx={{
+                                fontSize: 24,
+                                color: "blue",
+                                marginRight: "4px",
+                              }}
+                            />
+                            {item?.comments?.summary?.total_count || 0}
+                          </small>
+                          {/* <Typography>{item?.likes?.summary?.total_count || 0}</Typography> */}
                         </Box>
                       </Box>
                     ))}
