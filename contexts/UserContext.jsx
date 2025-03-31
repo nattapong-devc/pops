@@ -5,10 +5,11 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 
 const initialState = {
   user: null,
+  socialData: null,
   signin: (token) => {},
   signOut: () => {},
   getUserData: () => {},
-  social: (name, data, user) => {},
+  social: (name, data) => {},
   disconnectSocial: (name) => {},
 };
 
@@ -59,11 +60,12 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const social = (name, data, user) => {
-    setUser({
-      ...user,
+  const social = (name, data) => {
+    setSocialData({
+      ...state.socialData,
       [name]: data,
     });
+    console.log("social data", state.socialData);
   };
 
   const disconnectSocial = async (name) => {
@@ -105,6 +107,10 @@ export const UserProvider = ({ children }) => {
     dispatch({ type: "SET_USER", payload: user });
   };
 
+  const setSocialData = (socialData) => {
+    dispatch({ type: "SET_SOCIAL_DATA", payload: socialData });
+  };
+
   useEffect(() => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
     const token = key ? localStorage.getItem(key) : null;
@@ -130,6 +136,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case "SET_SOCIAL_DATA":
+      return {
+        ...state,
+        socialData: action.payload,
       };
     default:
       return state;

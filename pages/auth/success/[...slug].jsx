@@ -16,7 +16,7 @@ const Success = () => {
     try {
       const res = await axios.post("/api/facebook", { code });
       if (res.data.status === "success") {
-        social("facebook", res.data.data,user);
+        social("facebook", res.data.data);
         setCodeKey(res.data.status);
         setLoading(false);
 
@@ -34,7 +34,7 @@ const Success = () => {
       const res = await axios.post("/api/instagram", { code });
       if (res.data.status === "success") {
         console.log(res.data);
-        social("instagram", res.data.data,user);
+        social("instagram", res.data.data);
         setCodeKey(res.data.status);
         setLoading(false);
 

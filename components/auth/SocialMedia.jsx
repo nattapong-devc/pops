@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 export default function SocialMedia() {
-  const { social, disconnectSocial, user } = useUserContext();
+  const { social, disconnectSocial, user, socialData } = useUserContext();
   const router = useRouter();
 
   const FACEBOOK_CLIENT_ID = "2235829596835938";
@@ -41,7 +41,7 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-        "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
+          "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };
@@ -49,20 +49,20 @@ export default function SocialMedia() {
   let facebookLoginUrl = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
   let instagramLoginUrl = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
 
-  const [socialData, setSocialData] = React.useState([
+  const [socialDatas, setSocialDatas] = React.useState([
     {
       id: 1,
       name: "Facebook",
       icon: <FacebookIcon />,
       loginUrl: facebookLoginUrl,
-      status: user.facebook,
+      status: socialData.facebook,
     },
     {
       id: 2,
       name: "Instagram",
       icon: <InstagramIcon />,
       loginUrl: instagramLoginUrl,
-      status: user.instagram,
+      status: socialData.instagram,
     },
   ]);
 
@@ -72,7 +72,7 @@ export default function SocialMedia() {
         {/* <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
      
         </Box> */}
-        {socialData.map((item) => (
+        {socialDatas.map((item) => (
           <Box
             key={item.id}
             className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center"
@@ -119,7 +119,11 @@ export default function SocialMedia() {
                 <Button
                   variant="outlined"
                   size="small"
-                  onClick={() => router.push(`/auth/social/detail/${item.name.toLowerCase()}`)}
+                  onClick={() =>
+                    router.push(
+                      `/auth/social/detail/${item.name.toLowerCase()}`
+                    )
+                  }
                   endIcon={<NavigateNextIcon />}
                   sx={{
                     marginLeft: 1,
