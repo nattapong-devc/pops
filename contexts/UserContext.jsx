@@ -24,7 +24,6 @@ export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
   const [currentSocial, setCurrentSocial] = useState(null);
 
-  
   const signin = (token) => {
     const key = process.env.USER_ACCESS_TOKEN_KEY;
 
@@ -45,15 +44,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
-    // // get user data
-    // const res = await httpRequest("get", "/v2/kol/profiles");
-
-    // console.log(res);
-
-    // if (res.status == "error") return;
-
-    // setUser(res.data);
-
     setUser({
       username: "test_user",
       firstName: "Test",
@@ -62,11 +52,11 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const social = async(name, data) => {
+  const social = async (name, data) => {
     setCurrentSocial({
       ...currentSocial,
       [name]: data,
-    })
+    });
   };
 
   const disconnectSocial = async (name) => {
@@ -111,7 +101,6 @@ export const UserProvider = ({ children }) => {
   const setSocialData = (socialData) => {
     dispatch({ type: "SET_SOCIAL_DATA", payload: socialData });
   };
-
 
   useEffect(() => {
     if (currentSocial) {
