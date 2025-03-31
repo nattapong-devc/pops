@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       {
         params: {
           access_token: response_page.data.data[0].access_token,
-          fields: "id,message,created_time,full_picture,permalink_url",
+          fields: "id,message,created_time,full_picture,permalink_url,shares,likes.summary(true),comments.summary(true)",
           limit: 10,
         },
       }

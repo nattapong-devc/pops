@@ -7,6 +7,10 @@ import { useUserContext } from "@/contexts/UserContext";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import XIcon from "@mui/icons-material/X";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import Image from "next/image";
+import { TIKTOK } from "@/assets";
 export default function SocialMedia() {
   const { social, disconnectSocial, user } = useUserContext();
   const router = useRouter();
@@ -64,6 +68,27 @@ export default function SocialMedia() {
       loginUrl: instagramLoginUrl,
       status: user?.instagram ? user?.instagram : null,
     },
+    // {
+    //   id: 3,
+    //   name: "Tiktok",
+    //   icon: <Image src={TIKTOK.src} alt="tiktok" width={24} height={24} />,
+    //   loginUrl: "https://www.tiktok.com/",
+    //   status: null,
+    // },
+    // {
+    //   id: 4,
+    //   name: "Twitter",
+    //   icon: <XIcon />,
+    //   loginUrl: "https://www.twitter.com/",
+    //   status: null,
+    // },
+    // {
+    //   id: 5,
+    //   name: "Youtube",
+    //   icon: <YouTubeIcon />,
+    //   loginUrl: "https://www.youtube.com/",
+    //   status: null,
+    // },
   ]);
 
   const handleChangeDisconnect = async (name) => {
