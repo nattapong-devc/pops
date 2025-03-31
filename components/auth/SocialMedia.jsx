@@ -55,14 +55,14 @@ export default function SocialMedia() {
       name: "Facebook",
       icon: <FacebookIcon />,
       loginUrl: facebookLoginUrl,
-      status: socialData.facebook ? socialData.facebook : null,
+      status: socialData?.facebook ? socialData?.facebook : null,
     },
     {
       id: 2,
       name: "Instagram",
       icon: <InstagramIcon />,
       loginUrl: instagramLoginUrl,
-      status: socialData.instagram ? socialData.instagram : null,
+      status: socialData?.instagram ? socialData?.instagram : null,
     },
   ]);
 
