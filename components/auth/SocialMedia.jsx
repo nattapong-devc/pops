@@ -5,8 +5,10 @@ import axios from "axios";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { useUserContext } from "@/contexts/UserContext";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 export default function SocialMedia() {
-  const { social, user } = useUserContext();
+  const { social, disconnectSocial, user } = useUserContext();
   const router = useRouter();
 
   const FACEBOOK_CLIENT_ID = "2235829596835938";
@@ -20,9 +22,8 @@ export default function SocialMedia() {
 
     authorization: {
       params: {
-        scope:
-          "pages_read_user_content,pages_read_engagement,read_insights",
-          // "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
+        scope: "pages_read_user_content,pages_read_engagement,read_insights",
+        // "pages_show_list,pages_read_user_content,pages_read_engagement,read_insights",
       },
     },
   };
@@ -40,8 +41,8 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "instagram_business_basic,instagram_business_manage_insight",
-          // "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
+          "instagram_business_basic,instagram_business_manage_insight,instagram_business_manage_insights",
+        // "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };
@@ -49,92 +50,22 @@ export default function SocialMedia() {
   let facebookLoginUrl = `${currentProviderFacebook.loginUrl}?client_id=${currentProviderFacebook.clientId}&redirect_uri=${currentProviderFacebook.redirect_url}&response_type=code&scope=${currentProviderFacebook.authorization.params.scope}`;
   let instagramLoginUrl = `${currentProviderInstagram.loginUrl}?client_id=${currentProviderInstagram.clientId}&redirect_uri=${currentProviderInstagram.redirect_url}&response_type=code&scope=${currentProviderInstagram.authorization.params.scope}`;
 
-
-const [socialData, setSocialData] = React.useState([
-  {
-    id: 1,
-    name: "Facebook",
-    icon: <FacebookIcon />,
-    loginUrl: facebookLoginUrl,
-    status: user.facebook,
-  },
-  {
-    id: 2,
-    name: "Instagram",
-    icon: <InstagramIcon />,
-    loginUrl: instagramLoginUrl,
-    status: user.instagram,
-  },
-]);
-
-
-
-  // const handleFindFacebookData = async (code) => {
-  //   try {
-  //     const res = await axios.post("/api/facebook", { code });
-  //     if (res.data.status === "success") {
-  //       social("facebook", res.data.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
-  // const handleFindInstagramData = async (code) => {
-  //   try {
-  //     const res = await axios.post("/api/instagram", { code });
-  //     if (res.data.status === "success") {
-  //       console.log(res.data);
-  //       social("instagram", res.data.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
-  // const initializedFacebook = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const oauth_code_facebook = localStorage.getItem("oauth_code_facebook");
-
-  //     if (oauth_code_facebook && !initializedFacebook.current) {
-  //       initializedFacebook.current = true;
-  //       handleFindFacebookData(oauth_code_facebook);
-
-  //       // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
-  //       localStorage.removeItem("oauth_code_facebook");
-  //     }
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
-  //   };
-  // }, []);
-
-  // const initializedInstagram = useRef(false); // ✅ ใช้ useRef() เพื่อเก็บสถานะข้าม re-renders
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const oauth_code_instagram = localStorage.getItem("oauth_code_instagram");
-
-  //     if (oauth_code_instagram && !initializedInstagram.current) {
-  //       initializedInstagram.current = true;
-  //       handleFindInstagramData(oauth_code_instagram);
-
-  //       // ✅ ลบค่าออกจาก localStorage เพื่อลดการทำงานซ้ำ
-  //       localStorage.removeItem("oauth_code_instagram");
-  //     }
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(intervalId); // ✅ ล้าง interval อย่างถูกต้อง
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
+  const [socialData, setSocialData] = React.useState([
+    {
+      id: 1,
+      name: "Facebook",
+      icon: <FacebookIcon />,
+      loginUrl: facebookLoginUrl,
+      status: user.facebook,
+    },
+    {
+      id: 2,
+      name: "Instagram",
+      icon: <InstagramIcon />,
+      loginUrl: instagramLoginUrl,
+      status: user.instagram,
+    },
+  ]);
 
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
@@ -142,7 +73,7 @@ const [socialData, setSocialData] = React.useState([
         {/* <Box className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center">
      
         </Box> */}
-        {          socialData.map((item) => (
+        {socialData.map((item) => (
           <Box
             key={item.id}
             className="flex flex-row gap-5 shadow-2xl py-2 px-5 rounded-2xl w-full justify-between items-center"
@@ -152,14 +83,59 @@ const [socialData, setSocialData] = React.useState([
               <Typography>{item.name}</Typography>
             </Box>
             {item.status ? (
-              <Button
-                variant="contained"
-                color="success"
-                size="small"
-                onClick={() => router.push(item.loginUrl)}
-              >
-                Connected
-              </Button>
+              <Box>
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    backgroundColor: "#FF4F4F",
+                    "&:hover": {
+                      backgroundColor: "#FF4F4F",
+                    },
+                  }}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "Are you sure?",
+                      text: `You won't be able to revert this!`,
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Yes, disconnect it!",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire({
+                          title: "Disconnected!",
+                          text: `${item.name} has been disconnected.`,
+                          icon: "success",
+                          confirmButtonText: "OK",
+                        });
+                      }
+                    });
+                  }}
+                >
+                  Disconnect
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => router.push(`/auth/social/detail/${item.name}`)}
+                  endIcon={<NavigateNextIcon />}
+                  sx={{
+                    marginLeft: 1,
+                    borderRadius: "8px",
+                    color: "#000",
+                    borderColor: "#000",
+                    "&:hover": {
+                      backgroundColor: "#000",
+                      color: "#fff",
+                      borderColor: "#000",
+                    },
+                  }}
+                >
+                  View
+                </Button>
+              </Box>
             ) : (
               <Button
                 variant="contained"
@@ -171,7 +147,6 @@ const [socialData, setSocialData] = React.useState([
             )}
           </Box>
         ))}
- 
       </Container>
     </Box>
   );

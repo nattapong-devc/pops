@@ -4,6 +4,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { useRouter } from "next/router";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { useUserContext } from "@/contexts/UserContext";
+import axios from "axios";
 const Success = () => {
   const router = useRouter();
   const { code } = router.query;
@@ -48,7 +49,10 @@ const Success = () => {
 
   useEffect(() => {
     if (code) {
-      if (router.query.slug === "facebook") {
+      console.log(code);
+      console.log(router.query.slug);
+      if (router.query.slug[0] === "facebook") {
+        console.log(router.query.slug);
         handleFindFacebookData(code);
       } else if (router.query.slug === "instagram") {
         handleFindInstagramData(code);

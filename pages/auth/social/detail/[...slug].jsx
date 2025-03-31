@@ -6,9 +6,15 @@ import { Avatar, Box, Container, Typography } from "@mui/material";
 import { BarChart, PieChart } from "@mui/x-charts";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(user);
+  }
+  , [user]);
 
   return (
     <AppWrapper>
@@ -34,7 +40,7 @@ export default function SocialDetail() {
         </Typography>
       </Box>
 
-      {router.query.slug == "instagram" && user?.instagram && (
+{user && <>{router.query.slug[0] == "instagram" && user?.instagram && (
         <Container maxWidth="lg" className="flex flex-col gap-4 py-10">
           <Box className="flex flex-col gap-4 w-full ">
             <Box className="flex flex-row gap-4 shadow-lg p-4 rounded-xl items-center">
@@ -268,7 +274,7 @@ export default function SocialDetail() {
         </Container>
       )}
 
-      {router.query.slug == "facebook" && user?.facebook && (
+      {router.query.slug[0] == "facebook" && user?.facebook && (
         <Container maxWidth="lg" className="flex flex-col gap-4 py-10">
           <Box className="flex flex-col gap-4 w-full ">
             <Box className="flex flex-row gap-4 shadow-lg p-4 rounded-xl items-center">
@@ -472,7 +478,8 @@ export default function SocialDetail() {
              </Box> */}
           </Box>
         </Container>
-      )}
+      )}</>}
+      
     </AppWrapper>
   );
 }
