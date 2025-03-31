@@ -116,8 +116,6 @@ export const UserProvider = ({ children }) => {
     }
 
     setUser(user);
-
-    getUserData();
   };
 
   const functionContainer = {

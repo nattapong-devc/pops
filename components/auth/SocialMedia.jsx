@@ -66,6 +66,17 @@ export default function SocialMedia() {
     },
   ]);
 
+  const handleChangeDisconnect = async (name) => {
+    setSocialDatas((prev) =>
+      prev.map((item) => {
+        if (item.name === name) {
+          return { ...item, status: null };
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <Box className="flex flex-col items-center gap-5 w-full ">
       <Container maxWidth="sm">
@@ -104,6 +115,7 @@ export default function SocialMedia() {
                     }).then((result) => {
                       if (result.isConfirmed) {
                         disconnectSocial(item.name.toLowerCase());
+                        handleChangeDisconnect(item.name);
                         Swal.fire({
                           title: "Disconnected!",
                           text: `${item.name} has been disconnected.`,
