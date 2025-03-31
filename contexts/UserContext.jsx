@@ -62,11 +62,31 @@ export const UserProvider = ({ children }) => {
   const social = (name, data) => {
     let user = state.user;
 
-    user = {
-      ...user,
-      [name]: data,
-    };
+    if (name === "instagram") {
+      console.log("connect instagram");
 
+      //set instagram data in user context
+
+      user = {
+        ...user,
+        instagram: data,
+        facebook: user.facebook ? user.facebook : null,
+      };
+    }
+
+    if (name === "facebook") {
+      console.log("connect facebook");
+
+      //set facebook data in user context
+
+      user = {
+        ...user,
+        facebook: data,
+        instagram: user.instagram ? user.instagram : null,
+      };
+    }
+
+    console.log("user", user);
     setUser(user);
   };
 
