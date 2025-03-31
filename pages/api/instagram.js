@@ -41,7 +41,7 @@ export default async function handler(req, res) {
           params: {
             access_token: access_token,
             fields:
-              "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username",
+              "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username,like_count,comments_count",
           },
         }
       );
