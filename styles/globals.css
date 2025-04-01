@@ -14,3 +14,11 @@ body {
   width: 100%;
   height: 100%;
 }
+
+
+/* sweetalert2 */
+
+.swal2-container {
+  font-family: "Noto Sans Thai", sans-serif !important;
+  z-index: 999999999 !important;
+}

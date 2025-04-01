@@ -19,40 +19,62 @@ export default function SocialDetail() {
   const domain = "https://pops-phi.vercel.app";
 
   const handleSubmit = async (data) => {
-    const formData = new FormData();
+    if (!user.instagram) {
+      console.error("Instagram user not found");
+      return;
+    }
 
-    // เพิ่มไฟล์ทั้งหมดใน data.images
-    data.images.forEach((image) => {
-      formData.append("file", image); // "file" ต้องตรงกับ API
-    });
+    if (!user.instagram.user_id) {
+      console.error("Instagram user_id not found");
+      return;
+    }
 
-    const resImageUpload = await axios.post("/api/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    if (data.mediaType == "IMAGE") {
+      console.log("Uploading image to Instagram...");
 
-    console.log(resImageUpload.data);
+      //upload images
 
-    const imageUrl = resImageUpload.data.fileUrls[0];
-    const caption = data.description;
-    const altText = "test";
-    console.log(imageUrl);
+      uploadImages(data.images);
+    }
 
-    const res = await uploadImageToInstagram(imageUrl, caption, altText);
-    console.log(res);
-    if (res) {
-      console.log("Image uploaded successfully");
-    } else {
-      console.log("Image upload failed");
+    if (data.mediaType == "VIDEO") {
+      console.log("Uploading video to Instagram...");
+      uploadVideo(data.video);
     }
   };
 
-  const uploadImageToInstagram = async (
-    imageUrl,
-    caption = "",
-    altText = "test"
-  ) => {
+  const uploadImages = async (images) => {
+    try {
+      console.log("Uploading images to Instagram...");
+
+      const uploadPromises = images.map(async (image) => {
+        const formData = new FormData();
+        formData.append("file", image);
+
+        const resImageUpload = await axios.post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log(resImageUpload.data);
+
+        const imageUrl = resImageUpload.data.fileUrls[0];
+        const caption = "";
+        const altText = "test";
+        console.log(imageUrl);
+
+        const res = await uploadImageToInstagram(imageUrl, caption, altText);
+        console.log(res);
+      });
+
+      await Promise.all(uploadPromises);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+  };
+
+  const uploadImageToInstagram = async (imageUrl, caption = "") => {
     try {
       if (!user.instagram) {
         console.error("Instagram user not found");
@@ -69,7 +91,7 @@ export default function SocialDetail() {
         return;
       }
       console.log("Uploading image to Instagram...");
-      const response = await axios.post("/api/instagram-media", {
+      const response = await axios.post("/api/instagram-media-image", {
         access_token: user.instagram.access_token,
         image_url: imageUrl,
         caption: caption,
@@ -79,6 +101,64 @@ export default function SocialDetail() {
       return response;
     } catch (error) {
       console.error("Error uploading image:", error.response?.data || error);
+      throw error;
+    }
+  };
+
+  const uploadVideo = async (video) => {
+    try {
+      console.log("Uploading video to Instagram...");
+
+      const formData = new FormData();
+      formData.append("file", video);
+      const resVideoUpload = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(resVideoUpload.data);
+
+      const videoUrl = resVideoUpload.data.fileUrls[0];
+      const caption = "";
+      const altText = "test";
+      console.log(videoUrl);
+
+      const res = await uploadVideoToInstagram(videoUrl, caption);
+      console.log(res);
+    } catch (error) {
+      console.error("Error uploading video:", error);
+    }
+  };
+
+  const uploadVideoToInstagram = async (videoUrl, caption = "") => {
+    try {
+      if (!user.instagram) {
+        console.error("Instagram user not found");
+        return;
+      }
+
+      if (!user.instagram.user_id) {
+        console.error("Instagram user_id not found");
+        return;
+      }
+
+      if (!user.instagram.access_token) {
+        console.error("Instagram access_token not found");
+      }
+
+      console.log("Uploading video to Instagram...");
+
+      const response = await axios.post("/api/instagram-media-video", {
+        access_token: user.instagram.access_token,
+        video_url: videoUrl,
+        caption: caption,
+      });
+
+      console.log("Upload Response:", response);
+
+      return response;
+    } catch (error) {
+      console.error("Error uploading video:", error.response?.data || error);
       throw error;
     }
   };
