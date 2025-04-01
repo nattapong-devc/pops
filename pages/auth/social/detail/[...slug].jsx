@@ -64,7 +64,7 @@ export default function SocialDetail() {
         const imageUrl = resImageUpload.data.fileUrls[0];
         console.log(imageUrl);
 
-        const res = await uploadImageToInstagram(imageUrl, caption, altText);
+        const res = await uploadImageToInstagram(imageUrl, caption);
         console.log(res);
       });
 
