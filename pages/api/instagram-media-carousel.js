@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         `https://graph.instagram.com/me/media_publish`,
         {
           access_token: access_token,
-          media_type: "CAROUSEL_ALBUM",
+          media_type: "CAROUSEL",
           children: mediaIds.join(","),
         }
       );
@@ -33,7 +33,6 @@ export default async function handler(req, res) {
       res.status(200).json({
         status: "success",
         data: {
-          ids: mediaIds,
           publishResponse: publishResponse.data,
         },
       });
