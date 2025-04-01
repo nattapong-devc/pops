@@ -12,10 +12,11 @@ export default async function handler(req, res) {
           video_url: video_url,
           caption: caption,
           access_token: access_token,
-          media_type: "REELS",
+          media_type: "VIDEO", // ใช้ media_type เป็น VIDEO
         }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          timeout: 120000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
         }
       );
 
@@ -24,11 +25,29 @@ export default async function handler(req, res) {
       const { id } = response.data;
 
       // STEP 2: ตรวจสอบสถานะว่า Media พร้อมหรือไม่
-      const statusResponse = await axios.get(
-        `https://graph.instagram.com/${id}?fields=status_code&access_token=${access_token}`
-      );
+      let statusResponse;
+      let statusCode = "PENDING"; // สถานะเริ่มต้น
+      let retryCount = 0;
 
-      if (statusResponse.data.status_code === "FINISHED") {
+      while (statusCode !== "FINISHED" && retryCount < 10) {
+        statusResponse = await axios.get(
+          `https://graph.instagram.com/${id}?fields=status_code&access_token=${access_token}`,
+          { timeout: 120000 } // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
+        );
+
+        statusCode = statusResponse.data.status_code;
+        console.log("Status Code:", statusCode);
+
+        // ถ้ายังไม่เสร็จ รอ 5 วินาทีและลองใหม่
+        if (statusCode !== "FINISHED") {
+          retryCount++;
+          console.log(`Waiting for 5 seconds before retrying...`);
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+      }
+
+      // ตรวจสอบว่า Media พร้อมสำหรับการเผยแพร่
+      if (statusCode === "FINISHED") {
         // STEP 3: Publish วิดีโอ
         const publishResponse = await axios.post(
           `https://graph.instagram.com/me/media_publish`,
@@ -38,6 +57,7 @@ export default async function handler(req, res) {
           }),
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            timeout: 120000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
           }
         );
 
@@ -51,7 +71,7 @@ export default async function handler(req, res) {
       } else {
         res.status(400).json({
           status: "error",
-          message: "Media is not ready for publishing yet.",
+          message: "Media is not ready for publishing yet after retries.",
         });
       }
     } catch (error) {
