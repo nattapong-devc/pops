@@ -69,23 +69,14 @@ export default function SocialDetail() {
         return;
       }
       console.log("Uploading image to Instagram...");
-      const response = await axios.post(
-        `https://graph.instagram.com/me/media`,
-        {
-          params: {
-            access_token: user.instagram.access_token,
-            image_url: imageUrl,
-            caption: caption,
-          },
+      const response = await axios.post("/api/instagram-media", {
+        access_token: user.instagram.access_token,
+        image_url: imageUrl,
+        caption: caption,
+      });
 
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-
-      console.log("Upload Response:", response.data);
-      return response.data;
+      console.log("Upload Response:", response);
+      return response;
     } catch (error) {
       console.error("Error uploading image:", error.response?.data || error);
       throw error;
