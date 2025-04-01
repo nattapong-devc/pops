@@ -90,6 +90,14 @@ export default function SocialDetail() {
             timer: 1500,
           });
           getInstagramData();
+        }else{
+          Swal.fire({
+            icon: "error",
+            title: "โพสต์ไม่สำเร็จ",
+            text: "เกิดข้อผิดพลาดในการโพสต์",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       });
 
@@ -226,6 +234,14 @@ export default function SocialDetail() {
         });
 
         getInstagramData();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "โพสต์ไม่สำเร็จ",
+          text: "เกิดข้อผิดพลาดในการโพสต์",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
 
       console.log(res);
