@@ -33,6 +33,7 @@ export default function SocialDetail() {
       //upload images
       if (data.images.length > 1) {
         console.log("Uploading carousel to Instagram...");
+        uploadCarousel(data.images, data.caption);
       } else {
         console.log("Uploading image to Instagram...");
         uploadImages(data.images, data.caption);
