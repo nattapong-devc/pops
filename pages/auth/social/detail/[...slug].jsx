@@ -30,11 +30,13 @@ export default function SocialDetail() {
     }
 
     if (data.mediaType == "IMAGE") {
-      console.log("Uploading image to Instagram...");
-
       //upload images
-
-      uploadImages(data.images, data.caption);
+      if (data.images.length > 1) {
+        console.log("Uploading carousel to Instagram...");
+      } else {
+        console.log("Uploading image to Instagram...");
+        uploadImages(data.images, data.caption);
+      }
     }
 
     if (data.mediaType == "VIDEO") {
@@ -43,7 +45,7 @@ export default function SocialDetail() {
     }
   };
 
-  const uploadImages = async (images,caption) => {
+  const uploadImages = async (images, caption) => {
     try {
       console.log("Uploading images to Instagram...");
 
@@ -103,7 +105,7 @@ export default function SocialDetail() {
     }
   };
 
-  const uploadVideo = async (video,caption) => {
+  const uploadVideo = async (video, caption) => {
     try {
       console.log("Uploading video to Instagram...");
 
@@ -155,6 +157,63 @@ export default function SocialDetail() {
       return response;
     } catch (error) {
       console.error("Error uploading video:", error.response?.data || error);
+      throw error;
+    }
+  };
+
+  const uploadCarousel = async (images, caption) => {
+    try {
+      console.log("Uploading carousel to Instagram...");
+      const formData = new FormData();
+      images.forEach((image) => {
+        formData.append("file", image);
+      });
+
+      const resCarouselUpload = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(resCarouselUpload.data);
+
+      const imageUrls = resCarouselUpload.data.fileUrls;
+
+      console.log(imageUrls);
+      const res = await uploadCarouselToInstagram(imageUrls, caption);
+      console.log(res);
+    } catch (error) {
+      console.error("Error uploading carousel:", error);
+    }
+  };
+  const uploadCarouselToInstagram = async (imageUrls, caption = "") => {
+    try {
+      if (!user.instagram) {
+        console.error("Instagram user not found");
+        return;
+      }
+
+      if (!user.instagram.user_id) {
+        console.error("Instagram user_id not found");
+        return;
+      }
+
+      if (!user.instagram.access_token) {
+        console.error("Instagram access_token not found");
+        return;
+      }
+
+      console.log("Uploading carousel to Instagram...");
+
+      const response = await axios.post("/api/instagram-media-carousel", {
+        access_token: user.instagram.access_token,
+        images: imageUrls,
+        caption: caption,
+      });
+
+      console.log("Upload Response:", response);
+      return response;
+    } catch (error) {
+      console.error("Error uploading carousel:", error.response?.data || error);
       throw error;
     }
   };
