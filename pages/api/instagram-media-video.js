@@ -2,13 +2,13 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { access_token, image_url, caption } = req.body;
+    const { access_token, video_url, caption } = req.body;
 
     try {
       const response = await axios.post(
         `https://graph.instagram.com/me/media`,
         {
-          image_url: image_url,
+          video_url: video_url,
           caption: caption,
           access_token: access_token,
         }

@@ -34,16 +34,16 @@ export default function SocialDetail() {
 
       //upload images
 
-      uploadImages(data.images);
+      uploadImages(data.images, data.caption);
     }
 
     if (data.mediaType == "VIDEO") {
       console.log("Uploading video to Instagram...");
-      uploadVideo(data.video);
+      uploadVideo(data.video, data.caption);
     }
   };
 
-  const uploadImages = async (images) => {
+  const uploadImages = async (images,caption) => {
     try {
       console.log("Uploading images to Instagram...");
 
@@ -60,8 +60,6 @@ export default function SocialDetail() {
         console.log(resImageUpload.data);
 
         const imageUrl = resImageUpload.data.fileUrls[0];
-        const caption = "";
-        const altText = "test";
         console.log(imageUrl);
 
         const res = await uploadImageToInstagram(imageUrl, caption, altText);
@@ -105,7 +103,7 @@ export default function SocialDetail() {
     }
   };
 
-  const uploadVideo = async (video) => {
+  const uploadVideo = async (video,caption) => {
     try {
       console.log("Uploading video to Instagram...");
 
@@ -119,8 +117,6 @@ export default function SocialDetail() {
       console.log(resVideoUpload.data);
 
       const videoUrl = resVideoUpload.data.fileUrls[0];
-      const caption = "";
-      const altText = "test";
       console.log(videoUrl);
 
       const res = await uploadVideoToInstagram(videoUrl, caption);
