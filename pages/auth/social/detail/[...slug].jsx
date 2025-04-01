@@ -13,12 +13,23 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import AddIcon from "@mui/icons-material/Add";
 import Addpost from "@/components/instagram/Addpost";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default function SocialDetail() {
   const { user, social } = useUserContext();
   const router = useRouter();
   const domain = "https://pops-phi.vercel.app";
 
   const handleSubmit = async (data) => {
+    Swal.fire({
+      title: "กำลังอัพโหลดโพสต์",
+      text: "กรุณารอสักครู่...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    console.log(data);
+
     if (!user.instagram) {
       console.error("Instagram user not found");
       return;
@@ -69,6 +80,17 @@ export default function SocialDetail() {
 
         const res = await uploadImageToInstagram(imageUrl, caption);
         console.log(res);
+
+        if (res.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "โพสต์สำเร็จ",
+            text: "โพสต์ของคุณถูกอัพโหลดแล้ว",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          getInstagramData();
+        }
       });
 
       await Promise.all(uploadPromises);
@@ -149,14 +171,16 @@ export default function SocialDetail() {
 
       console.log("Uploading video to Instagram...");
 
-      const response = await axios.post("/api/instagram-media-video", {
-        access_token: user.instagram.access_token,
-        video_url: videoUrl,
-        caption: caption,
-      },
-      {
-        timeout: 240000,
-      }
+      const response = await axios.post(
+        "/api/instagram-media-video",
+        {
+          access_token: user.instagram.access_token,
+          video_url: videoUrl,
+          caption: caption,
+        },
+        {
+          timeout: 240000,
+        }
       );
 
       console.log("Upload Response:", response);
@@ -187,6 +211,19 @@ export default function SocialDetail() {
 
       console.log(imageUrls);
       const res = await uploadCarouselToInstagram(imageUrls, caption);
+
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "โพสต์สำเร็จ",
+          text: "โพสต์ของคุณถูกอัพโหลดแล้ว",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        getInstagramData();
+      }
+
       console.log(res);
     } catch (error) {
       console.error("Error uploading carousel:", error);
@@ -227,16 +264,16 @@ export default function SocialDetail() {
 
   const getInstagramData = async () => {
     try {
-      const res = await axios.post(
-        `/api/instagram-by-token`,
-        {
-          access_token: user.instagram.access_token,
-        },
-        {
-          timeout: 120000,
-        }
-      );
-      console.log(res.data);
+      const res = await axios.post(`/api/instagram-by-token`, {
+        access_token: user.instagram.access_token,
+      });
+
+      if(res.data.status !== "success") {
+        console.error("Error fetching Instagram data:", res.data);
+        return;
+      }
+
+
 
       social("instagram", res.data.data);
     } catch (error) {

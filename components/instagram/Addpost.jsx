@@ -91,7 +91,7 @@ export default function Addpost({ handleSubmit }) {
         </DialogTitle>
         <DialogContent>
           <Box className="flex flex-col gap-4">
-            <Box className="flex flex-col gap-2">
+            {/* <Box className="flex flex-col gap-2">
               <label htmlFor="mediaType">ประเภทโพสต์</label>
               <Select
                 id="mediaType"
@@ -104,7 +104,7 @@ export default function Addpost({ handleSubmit }) {
                 <MenuItem value="IMAGE">ภาพ</MenuItem>
                 <MenuItem value="VIDEO">วิดีโอ</MenuItem>
               </Select>
-            </Box>
+            </Box> */}
 
             {mediaType === "IMAGE" && (
               <Box className="flex flex-col gap-2">
