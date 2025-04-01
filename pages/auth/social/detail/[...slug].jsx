@@ -120,7 +120,11 @@ export default function SocialDetail() {
         access_token: user.instagram.access_token,
         image_url: imageUrl,
         caption: caption,
-      });
+      },{
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        timeout: 120000, // 60 seconds timeout
+      }
+      );
 
       console.log("Upload Response:", response);
       return response;

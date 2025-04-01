@@ -11,6 +11,10 @@ export default async function handler(req, res) {
           image_url: image_url,
           caption: caption,
           access_token: access_token,
+        },{
+          
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          timeout: 120000, // 60 seconds timeout
         }
       );
 
@@ -23,6 +27,10 @@ export default async function handler(req, res) {
         {
           access_token: access_token,
           creation_id: id,
+        },
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          timeout: 120000, // 60 seconds timeout
         }
       );
 
