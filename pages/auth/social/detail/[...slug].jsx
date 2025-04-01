@@ -268,14 +268,20 @@ export default function SocialDetail() {
         access_token: user.instagram.access_token,
       });
 
-      if(res.data.status !== "success") {
+      if (res.data.status !== "success") {
         console.error("Error fetching Instagram data:", res.data);
         return;
       }
 
-
-
-      social("instagram", res.data.data);
+      social("instagram", {
+        ...user.instagram,
+        me: res.data.data.me,
+        media: res.data.data.media,
+        insightsAge: res.data.data.insightsAge,
+        insightsCity: res.data.data.insightsCity,
+        insightsGender: res.data.data.insightsGender,
+        insightsMediaType: res.data.data.insightsMediaType,
+      });
     } catch (error) {
       console.error("Error fetching Instagram data:", error);
     }

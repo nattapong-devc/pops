@@ -83,17 +83,12 @@ export default async function handler(req, res) {
       res.status(200).json({
         status: "success",
         data: {
-          code,
-          ...response_token.data,
-          me: response_me ? response_me.data : null,
-          media: response_media ? response_media.data : null,
-          insightsAge: insightsAgeRes ? insightsAgeRes.data : null,
-          insightsCity: insightsCityRes ? insightsCityRes.data : null,
-          insightsGender: insightsGender ? insightsGender.data : null,
-          insightsMediaType: insightsMediaType,
-          // debug: response_token_debug
-          //   ? response_token_debug.data
-          //   : null,
+            me: response_me ? response_me.data : null,
+            media: response_media ? response_media.data : null,
+            insightsAge: insightsAgeRes ? insightsAgeRes.data : null,
+            insightsCity: insightsCityRes ? insightsCityRes.data : null,
+            insightsGender: insightsGender ? insightsGender.data : null,
+            insightsMediaType: insightsMediaType,
         },
       });
     } catch (error) {
