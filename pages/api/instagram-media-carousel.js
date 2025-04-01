@@ -30,6 +30,7 @@ export default async function handler(req, res) {
         new URLSearchParams({
           access_token: access_token,
           children: mediaIds.join(","),
+          media_type: "CAROUSEL",
         }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
           video_url: video_url,
           caption: caption,
           access_token: access_token,
-          media_type: "REEL",
+          media_type: "REELS",
         }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
