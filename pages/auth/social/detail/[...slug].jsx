@@ -126,7 +126,7 @@ export default function SocialDetail() {
         </Typography>
       </Box>
 
-      {user && router.query.slug (
+      {user && router.query.slug.length > 0 &&  router.query.slug[0] && (
         <>
           {router.query.slug[0] == "instagram" && user?.instagram && (
             <Container maxWidth="lg" className="flex flex-col gap-4 py-10">
