@@ -66,8 +66,19 @@ export default function SocialDetail() {
         console.error("Instagram user not found");
         return;
       }
+      if (!user.instagram.permissions && !user.instagram.permissions.user_id) {
+        console.error("Instagram user_id not found");
+
+        return;
+      }
+
+      if (!user.instagram.access_token) {
+        console.error("Instagram access_token not found");
+        return;
+      }
+      console.log("Uploading image to Instagram...");
       const response = await axios.post(
-        `https://graph.facebook.com/v22.0/${user.instagram.me.id}/media`,
+        `https://graph.facebook.com/v22.0/${user.instagram.permissions.user_id}/media`,
         null,
         {
           params: {
