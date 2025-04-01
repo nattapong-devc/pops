@@ -36,16 +36,24 @@ export default function SocialDetail() {
 
     console.log(resImageUpload.data);
 
+    const imageUrl = resImageUpload.data.fileUrls[0];
+    const caption = data.description;
+    const altText = "test";
+    console.log(imageUrl);
 
-    const resUpload = await uploadImageToInstagram(
-      `${domain}${resImageUpload.data.files[0].url}`,
-      data.description,
-      data.altText
-    );
-    console.log(resUpload);
+    const res = await uploadImageToInstagram(imageUrl, caption, altText);
+    console.log(res);
+    if (res) {
+      console.log("Image uploaded successfully");
+    } else {
+      console.log("Image upload failed");
+    }
 
 
-    // const resUpload = await uploadImageToInstagram(
+
+
+
+
   };
 
   const uploadImageToInstagram = async (
