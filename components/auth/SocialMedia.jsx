@@ -45,7 +45,7 @@ export default function SocialMedia() {
     authorization: {
       params: {
         scope:
-          "instagram_business_basic,instagram_business_insights,instagram_content_publish"
+          "instagram_business_basic,instagram_business_manage_insights,instagram_business_content_publish",
       },
     },
   };

@@ -2,7 +2,7 @@ import CardInfo from "@/components/card/CardInfo";
 import AppWrapper from "@/components/hoc/AppWrapper";
 import { useUserContext } from "@/contexts/UserContext";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
-import { Avatar, Box, Container, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, Typography } from "@mui/material";
 import { BarChart, LineChart, PieChart } from "@mui/x-charts";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -10,9 +10,74 @@ import { useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import AddIcon from "@mui/icons-material/Add";
+import Addpost from "@/components/instagram/Addpost";
+import axios from "axios";
 export default function SocialDetail() {
   const { user } = useUserContext();
   const router = useRouter();
+  const domain = "https://pops-phi.vercel.app";
+
+  const handleSubmit = async (data) => {
+    const formData = new FormData();
+
+    // เพิ่มไฟล์ทั้งหมดใน data.images
+    data.images.forEach((image) => {
+      formData.append("file", image); // "file" ต้องตรงกับ API
+    });
+
+    const resImageUpload = await axios.post("/api/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+
+
+    console.log(resImageUpload.data);
+
+
+    const resUpload = await uploadImageToInstagram(
+      `${domain}${resImageUpload.data.files[0].url}`,
+      data.description,
+      data.altText
+    );
+    console.log(resUpload);
+
+
+    // const resUpload = await uploadImageToInstagram(
+  };
+
+  const uploadImageToInstagram = async (
+    imageUrl,
+    caption = "",
+    altText = "test"
+  ) => {
+    try {
+      if (!user.instagram) {
+        console.error("Instagram user not found");
+        return;
+      }
+      const response = await axios.post(
+        `https://graph.facebook.com/v22.0/${user.instagram.me.id}/media`,
+        null,
+        {
+          params: {
+            image_url: imageUrl,
+            caption: caption,
+            alt_text: altText,
+            access_token: user.instagram.access_token,
+          },
+        }
+      );
+
+      console.log("Upload Response:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading image:", error.response?.data || error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     console.log(user);
@@ -92,7 +157,7 @@ export default function SocialDetail() {
                 </Box>
 
                 <Box>
-                  <Box className="shadow-lg py-2 px-4 rounded-xl items-center">
+                  <Box className="shadow-lg py-2 px-4 rounded-xl items-center flex flex-row justify-between">
                     <Typography
                       className="col-span-3"
                       sx={{
@@ -102,6 +167,8 @@ export default function SocialDetail() {
                     >
                       โพสต์
                     </Typography>
+
+                    <Addpost handleSubmit={handleSubmit} />
                   </Box>
                   <Box className="grid grid-cols-4 gap-4 mt-4">
                     {user?.instagram?.media.data.map((item, index) => (
@@ -238,23 +305,23 @@ export default function SocialDetail() {
                           fontWeight: "bold",
                         }}
                       >
-                       {'สถิติยอดไลค์ (ใหม่ - เก่า)'}
+                        {"สถิติยอดไลค์ (ใหม่ - เก่า)"}
                       </Typography>
                     </Box>
 
                     {user?.instagram?.media.data.length > 0 && (
-                     <LineChart
-                    //  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-                     series={[
-                       {
-                         data: user?.instagram?.media.data.map((item) => (
-                            item.like_count
-                          )),
-                       },
-                     ]}
-                     width={1080}
-                     height={300}
-                   />
+                      <LineChart
+                        //  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                        series={[
+                          {
+                            data: user?.instagram?.media.data.map(
+                              (item) => item.like_count
+                            ),
+                          },
+                        ]}
+                        width={1080}
+                        height={300}
+                      />
                     )}
                   </Box>
 
