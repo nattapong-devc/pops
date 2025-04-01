@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          timeout: 120000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
+          timeout: 240000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
         }
       );
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       while (statusCode !== "FINISHED" && retryCount < 10) {
         statusResponse = await axios.get(
           `https://graph.instagram.com/${id}?fields=status_code&access_token=${access_token}`,
-          { timeout: 120000 } // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
+          { timeout: 240000 } // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
         );
 
         statusCode = statusResponse.data.status_code;
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           }),
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            timeout: 120000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
+            timeout: 240000, // ตั้งเวลา timeout สำหรับการเชื่อมต่อ
           }
         );
 

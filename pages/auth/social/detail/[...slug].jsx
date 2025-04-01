@@ -155,7 +155,7 @@ export default function SocialDetail() {
         caption: caption,
       },
       {
-        timeout: 120000,
+        timeout: 240000,
       }
       );
 
