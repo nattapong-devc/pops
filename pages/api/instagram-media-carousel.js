@@ -19,20 +19,28 @@ export default async function handler(req, res) {
         mediaIds.push(response.data.id);
       }
 
-      console.log(mediaIds);
+      const responseCarousel = await axios.post(
+        `https://graph.instagram.com/me/media`,
+        {
+          access_token: access_token,
+          media_type: "CAROUSEL_ALBUM",
+          children: mediaIds.join(","),
+        }
+      );
+      console.log(responseCarousel.data);
 
+      const { id } = responseCarousel.data;
       const publishResponse = await axios.post(
         `https://graph.instagram.com/me/media_publish`,
         {
           access_token: access_token,
-          media_type: "CAROUSEL",
-          children: mediaIds.join(","),
+          creation_id: id,
         }
       );
-
       res.status(200).json({
         status: "success",
         data: {
+          id: id,
           publishResponse: publishResponse.data,
         },
       });
