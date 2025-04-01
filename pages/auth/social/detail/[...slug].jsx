@@ -33,16 +33,16 @@ export default function SocialDetail() {
       //upload images
       if (data.images.length > 1) {
         console.log("Uploading carousel to Instagram...");
-        uploadCarousel(data.images, data.caption);
+        uploadCarousel(data.images, data.description);
       } else {
         console.log("Uploading image to Instagram...");
-        uploadImages(data.images, data.caption);
+        uploadImages(data.images, data.description);
       }
     }
 
     if (data.mediaType == "VIDEO") {
       console.log("Uploading video to Instagram...");
-      uploadVideo(data.video, data.caption);
+      uploadVideo(data.video, data.description);
     }
   };
 
