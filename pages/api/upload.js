@@ -1,58 +1,30 @@
-import formidable from "formidable";
-import fs from "fs";
-import path from "path";
+import formidable from 'formidable';
+import fs from 'fs';
+import path from 'path';
 
 export const config = {
   api: {
-    bodyParser: false, // ปิด bodyParser เพื่อใช้ formidable
+    bodyParser: false, // ปิด bodyParser ของ Next.js
   },
 };
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      const uploadDir = path.join(process.cwd(), "/public/uploads");
+export default function handler(req, res) {
+  const form = new formidable.IncomingForm();
+  form.uploadDir = path.join(process.cwd(), 'tmp'); // ใช้ temp directory แทนที่จะเก็บไฟล์บนดิสก์ถาวร
+  form.keepExtensions = true; // เก็บนามสกุลไฟล์
+  form.multiples = true; // รองรับการอัปโหลดหลายไฟล์
 
-      // ตรวจสอบและสร้างโฟลเดอร์อัตโนมัติ
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true });
-      }
-
-      const form = formidable({
-        uploadDir,
-        keepExtensions: true,
-        multiples: true, // รองรับหลายไฟล์
-      });
-
-      form.parse(req, async (err, fields, files) => {
-        if (err) {
-          console.error("Error parsing files:", err);
-          return res.status(500).json({ error: "Error parsing files" });
-        }
-
-        console.log("Received files:", files); // ดูว่าได้รับไฟล์จริงไหม
-
-        if (!files.file) {
-          return res.status(400).json({ error: "No files uploaded" });
-        }
-
-        const uploadedFiles = [];
-
-        if (Array.isArray(files.file)) {
-          for (const file of files.file) {
-            uploadedFiles.push({ name: file.originalFilename, url: `/uploads/${file.newFilename}` });
-          }
-        } else {
-          uploadedFiles.push({ name: files.file.originalFilename, url: `/uploads/${files.file.newFilename}` });
-        }
-
-        res.status(200).json({ status: "success", files: uploadedFiles });
-      });
-    } catch (error) {
-      console.error("Server error:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  } else {
-    res.status(405).json({ error: "Method Not Allowed" });
+  if (!fs.existsSync(form.uploadDir)) {
+    fs.mkdirSync(form.uploadDir, { recursive: true });
   }
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.error('Error parsing files:', err);
+      return res.status(500).json({ error: 'Error parsing files' });
+    }
+
+    console.log('Uploaded files:', files); // ตรวจสอบไฟล์ที่อัปโหลด
+    res.status(200).json({ status: 'success', files: files });
+  });
 }
