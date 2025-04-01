@@ -32,8 +32,6 @@ export default function SocialDetail() {
       },
     });
 
-
-
     console.log(resImageUpload.data);
 
     const imageUrl = resImageUpload.data.fileUrls[0];
@@ -48,12 +46,6 @@ export default function SocialDetail() {
     } else {
       console.log("Image upload failed");
     }
-
-
-
-
-
-
   };
 
   const uploadImageToInstagram = async (
@@ -78,14 +70,15 @@ export default function SocialDetail() {
       }
       console.log("Uploading image to Instagram...");
       const response = await axios.post(
-        `https://graph.facebook.com/v22.0/${user?.instagram?.user_id}/media`,
-        null,
+        `https://graph.instagram.com/${user?.instagram?.user_id}/media`,
         {
           params: {
             image_url: imageUrl,
             caption: caption,
-            alt_text: altText,
             access_token: user.instagram.access_token,
+          },
+          headers: {
+            "Content-Type": "application/www-form-urlencoded",
           },
         }
       );
@@ -126,7 +119,7 @@ export default function SocialDetail() {
         </Typography>
       </Box>
 
-      {user && router.query.slug.length > 0 &&  router.query.slug[0] && (
+      {user && router.query.slug.length > 0 && router.query.slug[0] && (
         <>
           {router.query.slug[0] == "instagram" && user?.instagram && (
             <Container maxWidth="lg" className="flex flex-col gap-4 py-10">

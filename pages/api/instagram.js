@@ -23,25 +23,7 @@ export default async function handler(req, res) {
 
       console.log(response_token);
 
-      
-
       const { access_token } = response_token.data;
-
-
-//Debug Access Token
-
-// const response_token_debug = await axios.get(
-//   `https://graph.instagram.com/debug_token`,
-//   {
-//     params: {
-//       input_token: access_token,
-//       access_token: access_token,
-//     }
-//   }
-
-// );
-
-
 
       const response_me = await axios.get(`https://graph.instagram.com/me`, {
         params: {
