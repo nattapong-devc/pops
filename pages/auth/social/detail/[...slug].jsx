@@ -14,7 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Addpost from "@/components/instagram/Addpost";
 import axios from "axios";
 export default function SocialDetail() {
-  const { user } = useUserContext();
+  const { user, social } = useUserContext();
   const router = useRouter();
   const domain = "https://pops-phi.vercel.app";
 
@@ -44,6 +44,8 @@ export default function SocialDetail() {
       console.log("Uploading video to Instagram...");
       uploadVideo(data.video, data.description);
     }
+
+    getInstagramData();
   };
 
   const uploadImages = async (images, caption) => {
@@ -216,6 +218,19 @@ export default function SocialDetail() {
     } catch (error) {
       console.error("Error uploading carousel:", error.response?.data || error);
       throw error;
+    }
+  };
+
+  const getInstagramData = async () => {
+    try {
+      const res = await axios.post(`/api/instagram-by-token`, {
+        access_token: user.instagram.access_token,
+      });
+      console.log(res.data);
+
+      social("instagram", res.data.data);
+    } catch (error) {
+      console.error("Error fetching Instagram data:", error);
     }
   };
 
