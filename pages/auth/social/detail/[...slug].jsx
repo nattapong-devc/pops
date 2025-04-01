@@ -45,7 +45,7 @@ export default function SocialDetail() {
       uploadVideo(data.video, data.description);
     }
 
-    getInstagramData();
+    // getInstagramData();
   };
 
   const uploadImages = async (images, caption) => {
@@ -153,7 +153,11 @@ export default function SocialDetail() {
         access_token: user.instagram.access_token,
         video_url: videoUrl,
         caption: caption,
-      });
+      },
+      {
+        timeout: 120000,
+      }
+      );
 
       console.log("Upload Response:", response);
 
@@ -223,9 +227,15 @@ export default function SocialDetail() {
 
   const getInstagramData = async () => {
     try {
-      const res = await axios.post(`/api/instagram-by-token`, {
-        access_token: user.instagram.access_token,
-      });
+      const res = await axios.post(
+        `/api/instagram-by-token`,
+        {
+          access_token: user.instagram.access_token,
+        },
+        {
+          timeout: 120000,
+        }
+      );
       console.log(res.data);
 
       social("instagram", res.data.data);

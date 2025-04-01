@@ -18,7 +18,7 @@ export default async function handler(req, res) {
           }),
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            timeout: 60000, // 60 seconds timeout
+            timeout: 120000, // 60 seconds timeout
           }
         );
         mediaIds.push(response.data.id);
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          timeout: 60000, // 60 seconds timeout
+          timeout: 120000, // 60 seconds timeout
         }
       );
       console.log(responseCarousel.data);
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       // Step 3: ตรวจสอบสถานะ Media ว่าพร้อมหรือไม่
       const statusResponse = await axios.get(
         `https://graph.instagram.com/${id}?fields=status_code&access_token=${access_token}`,
-        { timeout: 60000 } // 60 seconds timeout
+        { timeout: 120000 } // 60 seconds timeout
       );
 
       if (statusResponse.data.status_code === "FINISHED") {
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           }),
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            timeout: 60000, // 60 seconds timeout
+            timeout: 120000, // 60 seconds timeout
           }
         );
 
