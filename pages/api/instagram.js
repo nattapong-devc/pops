@@ -30,16 +30,16 @@ export default async function handler(req, res) {
 
 //Debug Access Token
 
-const response_token_debug = await axios.get(
-  `https://graph.instagram.com/debug_token`,
-  {
-    params: {
-      input_token: access_token,
-      access_token: access_token,
-    }
-  }
+// const response_token_debug = await axios.get(
+//   `https://graph.instagram.com/debug_token`,
+//   {
+//     params: {
+//       input_token: access_token,
+//       access_token: access_token,
+//     }
+//   }
 
-);
+// );
 
 
 
@@ -129,9 +129,9 @@ const response_token_debug = await axios.get(
           insightsCity: insightsCityRes ? insightsCityRes.data : null,
           insightsGender: insightsGender ? insightsGender.data : null,
           insightsMediaType: insightsMediaType,
-          debug: response_token_debug
-            ? response_token_debug.data
-            : null,
+          // debug: response_token_debug
+          //   ? response_token_debug.data
+          //   : null,
         },
       });
     } catch (error) {
