@@ -70,15 +70,16 @@ export default function SocialDetail() {
       }
       console.log("Uploading image to Instagram...");
       const response = await axios.post(
-        `https://graph.instagram.com/${user?.instagram?.user_id}/media`,
+        `https://graph.instagram.com/me/media`,
         {
           params: {
+            access_token: user.instagram.access_token,
             image_url: imageUrl,
             caption: caption,
-            access_token: user.instagram.access_token,
           },
+
           headers: {
-            "Content-Type": "application/www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
         }
       );
