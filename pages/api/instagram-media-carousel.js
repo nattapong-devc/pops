@@ -23,7 +23,6 @@ export default async function handler(req, res) {
         `https://graph.instagram.com/me/media`,
         {
           access_token: access_token,
-          media_type: "CAROUSEL_ALBUM",
           children: mediaIds.join(","),
         }
       );
