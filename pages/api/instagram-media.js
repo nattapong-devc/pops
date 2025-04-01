@@ -19,9 +19,10 @@ export default async function handler(req, res) {
       const { id } = response.data;
 
       const publishResponse = await axios.post(
-        `https://graph.instagram.com/${id}/publish`,
+        `https://graph.instagram.com/me/media_publish`,
         {
           access_token: access_token,
+          creation_id: id,
         }
       );
 
