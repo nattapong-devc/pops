@@ -104,7 +104,7 @@ export default async function handler(req, res) {
         status: "success",
         data: {
           code,
-          access_token,
+          ...response_token.data,
           me: response_me ? response_me.data : null,
           media: response_media ? response_media.data : null,
           insightsAge: insightsAgeRes ? insightsAgeRes.data : null,
