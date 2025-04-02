@@ -20,6 +20,12 @@ export default function App({ Component, pageProps }) {
         {/* Google bot */}
         <meta name="googlebot" content="index, follow" />
         <meta name="robots" content="index, follow" />
+
+        {/* google-site-verification=NxLyPaUZmAKBW74Wn3-gY_gay77FeJDyC6Yc39DJwPY */}
+        <meta
+          name="google-site-verification"
+          content="NxLyPaUZmAKBW74Wn3-gY_gay77FeJDyC6Yc39DJwPY"
+        />
       </Head>
       <Provider>
         <Component {...pageProps} />
