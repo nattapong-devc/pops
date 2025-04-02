@@ -105,6 +105,7 @@ function DrawerAppBar(props) {
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
+                onClose={handleClose}
                 sx={{
                   " & .MuiMenu-paper": {
                     borderRadius: "8px",
