@@ -335,7 +335,7 @@ export default function SocialDetail() {
         </Typography>
       </Box>
 
-      {user && router.query.slug.length > 0 && router.query.slug[0] && (
+      {user && router.query.slug && router.query.slug.length > 0 && router.query.slug[0] && (
         <>
           {router.query.slug[0] == "instagram" && user?.instagram && (
             <Container maxWidth="lg" className="flex flex-col gap-4 py-10">
@@ -364,6 +364,9 @@ export default function SocialDetail() {
                     >
                       {user?.instagram?.me.name}
                     </Typography>
+                    <small className="text-xs">
+                     username : {user?.instagram?.me.username}
+                    </small>
                     <small className="text-xs">
                       {user?.instagram?.me.biography}
                     </small>
@@ -700,6 +703,9 @@ export default function SocialDetail() {
                     >
                       โปรไฟล์
                     </Typography>
+                    <small className="text-xs">
+                    FACEBOOK ID : {user?.facebook?.page?.id}
+                    </small>
                     <Typography
                       sx={{
                         fontSize: "1.25rem",
